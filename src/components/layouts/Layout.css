@@ -1,1 +1,18 @@
+div#root {
+  display: flex;
+  min-height: 100vh;
+  justify-content: center;
+  background: white;
+}
 
+div#root div.centrepane {
+  background: whitesmoke;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+div#root div.centrepane > main {
+  padding: 30px;
+  width: 100%;
+}

@@ -15,10 +15,10 @@ function Layout(props) {
 
   // View
   return (
-    <div>
+    <div className="centrepane">
       <Header />
       <Navbar />
-      <div>{props.children}</div>
+      <main>{props.children}</main>
       <Footer />
     </div>
   );

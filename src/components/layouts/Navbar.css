@@ -28,3 +28,8 @@ nav .nav-links {
 nav .nav-links a {
   margin-left: 10px;
 }
+
+nav div.nav-item a.navSelected {
+  background-color: #555;
+  color: black;
+}

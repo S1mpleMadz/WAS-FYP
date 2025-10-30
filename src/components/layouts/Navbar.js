@@ -1,3 +1,4 @@
+import { NavLink } from "react-router-dom";
 import "./Navbar.css";
 
 function Navbar(props) {
@@ -9,29 +10,49 @@ function Navbar(props) {
 
   // Methods
 
+  const getLinkStyle = ({ isActive }) => (isActive ? "navSelected" : null);
   // View
   return (
     <nav>
       <div className="nav-item">
-        <a href="/">Home</a>
+        <NavLink to="/" className={getLinkStyle}>
+          Home
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/modules">Modules</a>
+        <NavLink to="/duties" className={getLinkStyle}>
+          Duties
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/staff">Staff</a>
+        <NavLink to="/modules" className={getLinkStyle}>
+          Modules
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/duties">Duties</a>
+        <NavLink to="/staff" className={getLinkStyle}>
+          Staff
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/research">Research</a>
+        <NavLink to="/research" className={getLinkStyle}>
+          Research
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/login">Login</a>
+        <NavLink to="/login" className={getLinkStyle}>
+          Login
+        </NavLink>
       </div>
       <div className="nav-item">
-        <a href="/signin">Sign In</a>
+        <NavLink to="/signin" className={getLinkStyle}>
+          Sign In
+        </NavLink>
+      </div>
+      <div className="nav-item">
+        <NavLink to="/404" className={getLinkStyle}>
+          404 Page
+        </NavLink>
       </div>
     </nav>
   );
