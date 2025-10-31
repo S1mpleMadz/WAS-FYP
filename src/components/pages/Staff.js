@@ -2,7 +2,6 @@ import { useState } from "react";
 
 function Staff() {
   // Initialisation
-
   const loggedinUser = null;
   const endpoint = "/users";
 
@@ -13,7 +12,7 @@ function Staff() {
   // Context
 
   // Methods
-  const URL = "http://localhost:5000/api";
+  const URL = "http://http://localhost/api.php";
   const endpointaddress = URL + endpoint;
   fetch(endpointaddress);
 
