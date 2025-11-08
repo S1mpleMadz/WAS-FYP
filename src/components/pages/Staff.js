@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function Staff() {
   // Initialisation
@@ -12,9 +12,19 @@ function Staff() {
   // Context
 
   // Methods
-  const URL = "http://http://localhost/api.php";
-  const endpointaddress = URL + endpoint;
-  fetch(endpointaddress);
+
+  const apiCall = async (endpoint) => {
+    const URL = "http://localhost:5000/api";
+    const endpointAddress = URL + endpoint;
+    const response = await fetch(endpointAddress);
+    const result = await response.json();
+
+    setUsers(result);
+  };
+
+  useEffect(() => {
+    apiCall(endpoint);
+  }, [endpoint]);
 
   // View
   return (
@@ -26,7 +36,7 @@ function Staff() {
         <p>No users found</p>
       ) : (
         users.map((user) => (
-          <p>
+          <p key={user.UserID}>
             {user.UserFirstname} {user.UserLastname}
           </p>
         ))
