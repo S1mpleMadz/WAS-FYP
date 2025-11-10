@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import API from "../api/API.js";
 
 function Staff() {
   // Initialisation
@@ -14,12 +15,11 @@ function Staff() {
   // Methods
 
   const apiCall = async (endpoint) => {
-    const URL = "http://localhost:5000/api";
-    const endpointAddress = URL + endpoint;
-    const response = await fetch(endpointAddress);
-    const result = await response.json();
+    const response = await API.get(endpoint);
 
-    setUsers(result);
+    response.isSuccess
+      ? setUsers(response.result)
+      : setLoadingMessage(response.message);
   };
 
   useEffect(() => {
