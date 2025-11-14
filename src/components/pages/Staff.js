@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import StaffForm from "../entities/staff/StaffForm.js";
 import API from "../api/API.js";
 
 function Staff() {
@@ -9,6 +10,8 @@ function Staff() {
   // State
   const [users, setUsers] = useState(null);
   const [loadingMessage, setLoadingMessage] = useState("Loading records...");
+
+  const [showNewStaffForm, setShowNewStaffForm] = useState(false);
 
   // Context
 
@@ -26,9 +29,12 @@ function Staff() {
     apiCall(endpoint);
   }, [endpoint]);
 
+  const handleAdd = () => setShowNewStaffForm(true);
   // View
   return (
     <section>
+      <button onClick={handleAdd}>Add Staff</button>
+      {showNewStaffForm && <StaffForm />}
       <h1>Welome to Staff</h1>
       {!users ? (
         <p>{loadingMessage}</p>
