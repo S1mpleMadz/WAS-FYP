@@ -15,7 +15,7 @@ const callFetch = async (endpoint, method, dataObj) => {
   if (dataObj)
     requestObj = {
       ...requestObj,
-      header: { "Content-type": "application/json" },
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(dataObj),
     };
 
