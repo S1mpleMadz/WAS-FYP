@@ -30,11 +30,14 @@ function Staff() {
   }, [endpoint]);
 
   const handleAdd = () => setShowNewStaffForm(true);
+
+  const handleDismissAdd = () => setShowNewStaffForm(false);
+
   // View
   return (
     <section>
       <button onClick={handleAdd}>Add Staff</button>
-      {showNewStaffForm && <StaffForm />}
+      {showNewStaffForm && <StaffForm onDismiss={handleDismissAdd} />}
       <h1>Welome to Staff</h1>
       {!users ? (
         <p>{loadingMessage}</p>

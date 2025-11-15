@@ -15,7 +15,7 @@ const emptyStaff = {
   WorkStatusID: 0,
 };
 
-export default function StaffForm({ initialStaff = emptyStaff }) {
+export default function StaffForm({ onDismiss, initialStaff = emptyStaff }) {
   // Initialisation --------------------------
 
   const isValid = {
@@ -151,6 +151,10 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
       [name]: isValid[name](newValue) ? null : errorMessage[name],
     });
   };
+
+  const handleSubmit = () => {};
+
+  const handleCancel = () => onDismiss();
 
   // View ------------------------------------
   return (
@@ -348,6 +352,9 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
           </select>
         )}
       </FormItem>
+
+      <button onClick={handleSubmit}>Submit</button>
+      <button onClick={handleCancel}>Cancel</button>
     </form>
   );
 }
