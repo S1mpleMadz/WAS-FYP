@@ -4,15 +4,15 @@ import API from "../../api/API.js";
 import "./StaffForm.css";
 
 const emptyStaff = {
-  UserTitle: "Mr",
-  UserFirstname: "test",
-  UserLastname: "pop",
-  UserEmail: "t.pop@kingston.ac.uk",
+  UserTitle: "",
+  UserFirstname: "",
+  UserLastname: "",
+  UserEmail: "xxx@kingston.ac.uk",
   UserImageURL: "https://somthing",
-  UserTypeID: 3,
-  PositionID: 2,
-  DepartmentID: 3,
-  WorkStatusID: 2,
+  UserTypeID: 0,
+  PositionID: 0,
+  DepartmentID: 0,
+  WorkStatusID: 0,
 };
 
 export default function StaffForm({
@@ -193,7 +193,7 @@ export default function StaffForm({
           value={staff.UserTitle}
           onChange={handleChange}
         >
-          <option value="0" disabled>
+          <option value="" disabled>
             None Selected
           </option>
           {["Mr", "Mrs", "Miss"].map((title) => (
