@@ -1,5 +1,6 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormItem from "../../UI/Form.js";
+import API from "../../api/API.js";
 import "./StaffForm.css";
 
 const emptyStaff = {
@@ -21,19 +22,22 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
     UserTitle: (Title) => Title === "Mr" || Title === "Mrs" || Title === "Miss",
     UserFirstname: (Firstname) => Firstname.length > 0,
     UserLastname: (Lastname) => Lastname.length > 0,
-    UserEmail: (Email) => Email.length > 0,
+    UserEmail: (Email) =>
+      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+        Email
+      ),
     UserImageURL: (ImageURL) => ImageURL.length > 0,
-    UserTypeID: (id) => true,
-    PositionID: (id) => true,
-    DepartmentID: (id) => true,
-    WorkStatusID: (id) => true,
+    UserTypeID: (id) => id !== 0,
+    PositionID: (id) => id !== 0,
+    DepartmentID: (id) => id !== 0,
+    WorkStatusID: (id) => id !== 0,
   };
 
   const errorMessage = {
     UserTitle: "No Staff Title Has been Selected",
     UserFirstname: "Staff First Name is Empty",
     UserLastname: "Staff Last Name is Empty",
-    UserEmail: "Staff Email is Empty",
+    UserEmail: "Staff Email is Not Valid",
     UserImageURL: "Staff Image URL is Empty",
     UserTypeID: "No Staff Type Has been Selected",
     PositionID: "No Staff Position Has been Selected",
@@ -51,6 +55,81 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
       {}
     )
   );
+
+  // Types
+  const [types, setTypes] = useState(null);
+  const [loadingTypesMessage, setLoadingTypesMessage] = useState(
+    "Loading Recoards . . . "
+  );
+
+  const getTypes = async () => {
+    const response = await API.get("/types");
+
+    response.isSuccess
+      ? setTypes(response.result)
+      : setLoadingTypesMessage(response.message);
+  };
+
+  useEffect(() => {
+    getTypes();
+  }, []);
+
+  // Work Sttaus of User
+
+  const [workstatus, setWorkStatus] = useState(null);
+  const [loadingWorkStatusMessage, setLoadingWorkStatusMessage] = useState(
+    "Loading Recoards . . . "
+  );
+
+  const getWorkStatus = async () => {
+    const response = await API.get("/workstatus");
+
+    response.isSuccess
+      ? setWorkStatus(response.result)
+      : setLoadingWorkStatusMessage(response.message);
+  };
+
+  useEffect(() => {
+    getWorkStatus();
+  }, []);
+
+  // Positions
+
+  const [positions, setPositionStatus] = useState(null);
+  const [loadingPositionMessage, setLoadingPositionMessage] = useState(
+    "Loading Recoards . . . "
+  );
+
+  const getPositionStatus = async () => {
+    const response = await API.get("/positions");
+
+    response.isSuccess
+      ? setPositionStatus(response.result)
+      : setLoadingPositionMessage(response.message);
+  };
+
+  useEffect(() => {
+    getPositionStatus();
+  }, []);
+
+  // Department
+
+  const [departments, setDepartmentStatus] = useState(null);
+  const [loadingDepartmentMessage, setLoadingDepartmentMessage] = useState(
+    "Loading Recoards . . . "
+  );
+
+  const getDepartmentStatus = async () => {
+    const response = await API.get("/departments");
+
+    response.isSuccess
+      ? setDepartmentStatus(response.result)
+      : setLoadingDepartmentMessage(response.message);
+  };
+
+  useEffect(() => {
+    getDepartmentStatus();
+  }, []);
 
   // Handlers --------------------------------
 
@@ -87,8 +166,8 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
           value={staff.UserTitle}
           onChange={handleChange}
         >
-          <option value="Select" disabled>
-            {"Select Option"}
+          <option value="0" disabled>
+            None Selected
           </option>
           {["Mr", "Mrs", "Miss"].map((title) => (
             <option key={title}>{title}</option>
@@ -150,6 +229,124 @@ export default function StaffForm({ initialStaff = emptyStaff }) {
           value={staff.UserImageURL}
           onChange={handleChange}
         />
+      </FormItem>
+
+      <FormItem
+        label="User Type / Position / Role"
+        htmlFor="UserTypeID"
+        advice="Select Staff Type/Position/Role"
+        error={errors.UserTypeID}
+      >
+        {!types ? (
+          <p>{loadingTypesMessage}</p>
+        ) : types.length === 0 ? (
+          <p> No User Types</p>
+        ) : (
+          <select
+            name="UserTypeID"
+            value={staff.UserTypeID}
+            onChange={handleChange}
+          >
+            <option value="0" disable>
+              None Selected
+            </option>
+            {types.map((type) => (
+              <option key={type.UserTypeID} value={type.UserTypeID}>
+                {type.TypeName}
+              </option>
+            ))}
+          </select>
+        )}
+      </FormItem>
+
+      <FormItem
+        label="Work Status"
+        htmlFor="WorkStatusID"
+        advice="Select Staff Work Status"
+        error={errors.WorkStatusID}
+      >
+        {!workstatus ? (
+          <p>{loadingWorkStatusMessage}</p>
+        ) : workstatus.length === 0 ? (
+          <p> No User Work Status</p>
+        ) : (
+          <select
+            name="WorkStatusID"
+            value={staff.WorkStatusID}
+            onChange={handleChange}
+          >
+            <option value="0" disable>
+              None Selected
+            </option>
+            {workstatus.map((workstate) => (
+              <option
+                key={workstate.WorkStatusID}
+                value={workstate.WorkStatusID}
+              >
+                {workstate.WorkTypeName}
+              </option>
+            ))}
+          </select>
+        )}
+      </FormItem>
+
+      <FormItem
+        label="Staff Position"
+        htmlFor="PositionID"
+        advice="Select Staff Position"
+        error={errors.PositionID}
+      >
+        {!positions ? (
+          <p>{loadingPositionMessage}</p>
+        ) : positions.length === 0 ? (
+          <p> No User positions</p>
+        ) : (
+          <select
+            name="PositionID"
+            value={staff.PositionID}
+            onChange={handleChange}
+          >
+            <option value="0" disable>
+              None Selected
+            </option>
+            {positions.map((position) => (
+              <option key={position.PositionID} value={position.PositionID}>
+                {position.PositionName}
+              </option>
+            ))}
+          </select>
+        )}
+      </FormItem>
+
+      <FormItem
+        label="Staff Department"
+        htmlFor="DepartmentID"
+        advice="Select Staff Department"
+        error={errors.DepartmentID}
+      >
+        {!departments ? (
+          <p>{loadingDepartmentMessage}</p>
+        ) : departments.length === 0 ? (
+          <p> No User positions</p>
+        ) : (
+          <select
+            name="DepartmentID"
+            value={staff.DepartmentID}
+            onChange={handleChange}
+          >
+            <option value="0" disable>
+              None Selected
+            </option>
+            {departments.map((department) => (
+              <option
+                key={department.DepartmentID}
+                value={department.DepartmentID}
+              >
+                {department.DepartmentName}
+              </option>
+            ))}
+          </select>
+        )}
       </FormItem>
     </form>
   );
