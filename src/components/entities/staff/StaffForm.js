@@ -9,13 +9,17 @@ const emptyStaff = {
   UserLastname: "pop",
   UserEmail: "t.pop@kingston.ac.uk",
   UserImageURL: "https://somthing",
-  UserTypeID: 0,
-  PositionID: 0,
-  DepartmentID: 0,
-  WorkStatusID: 0,
+  UserTypeID: 3,
+  PositionID: 2,
+  DepartmentID: 3,
+  WorkStatusID: 2,
 };
 
-export default function StaffForm({ onDismiss, initialStaff = emptyStaff }) {
+export default function StaffForm({
+  onDismiss,
+  onSubmit,
+  initialStaff = emptyStaff,
+}) {
   // Initialisation --------------------------
 
   const isValid = {
@@ -152,9 +156,28 @@ export default function StaffForm({ onDismiss, initialStaff = emptyStaff }) {
     });
   };
 
-  const handleSubmit = () => {};
+  const isValidStaff = (staff) => {
+    let isStaffValid = true;
+
+    Object.keys(staff).forEach((key) => {
+      if (isValid[key](staff[key])) {
+        errors[key] = null;
+      } else {
+        errors[key] = errorMessage[key];
+        isStaffValid = false;
+      }
+    });
+
+    return isStaffValid;
+  };
 
   const handleCancel = () => onDismiss();
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    isValidStaff(staff) && onSubmit(staff) && onDismiss();
+    setErrors({ ...errors });
+  };
 
   // View ------------------------------------
   return (

@@ -4,7 +4,7 @@ import API from "../api/API.js";
 
 function Staff() {
   // Initialisation
-  const loggedinUser = null;
+  // const loggedinUser = null;
   const endpoint = "/users";
 
   // State
@@ -17,8 +17,8 @@ function Staff() {
 
   // Methods
 
-  const apiCall = async (endpoint) => {
-    const response = await API.get(endpoint);
+  const getStaff = async () => {
+    const response = await API.get("/users");
 
     response.isSuccess
       ? setUsers(response.result)
@@ -26,18 +26,26 @@ function Staff() {
   };
 
   useEffect(() => {
-    apiCall(endpoint);
-  }, [endpoint]);
+    getStaff();
+  }, []);
 
   const handleAdd = () => setShowNewStaffForm(true);
 
   const handleDismissAdd = () => setShowNewStaffForm(false);
 
+  const handleSubmit = async (staff) => {
+    const response = await API.post(endpoint, staff);
+
+    return response.isSuccess ? getStaff() || true : false;
+  };
+
   // View
   return (
     <section>
       <button onClick={handleAdd}>Add Staff</button>
-      {showNewStaffForm && <StaffForm onDismiss={handleDismissAdd} />}
+      {showNewStaffForm && (
+        <StaffForm onDismiss={handleDismissAdd} onSubmit={handleSubmit} />
+      )}
       <h1>Welome to Staff</h1>
       {!users ? (
         <p>{loadingMessage}</p>
