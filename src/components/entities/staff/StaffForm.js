@@ -181,6 +181,8 @@ export default function StaffForm({
 
   // View ------------------------------------
   return (
+    // need to refacor this properly to get rid of formitem and see how it can be refactored
+
     <form className="BorderedForm">
       <FormItem
         label="User Title"
