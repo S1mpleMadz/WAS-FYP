@@ -9,6 +9,7 @@ import PageNotFound from "./components/pages/404.js";
 import SignIn from "./components/pages/SignIn.js";
 import Staff from "./components/pages/Staff.js";
 import Research from "./components/pages/Research.js";
+import SpecificUserInformation from "./components/entities/staff/StaffInfo.js";
 import "./App.css";
 
 function App() {
@@ -23,6 +24,10 @@ function App() {
           <Route path="/signin" element={<SignIn />} />
           <Route path="/staff" element={<Staff />} />
           <Route path="/research" element={<Research />} />
+          <Route
+            path="/UserInformation/:userId"
+            element={<SpecificUserInformation />}
+          />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
       </Layout>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import StaffForm from "../entities/staff/StaffForm.js";
 import API from "../api/API.js";
+import UserCard from "../entities/staff/StaffCard.js";
 
 function Staff() {
   // Initialisation
@@ -52,11 +53,7 @@ function Staff() {
       ) : users.length === 0 ? (
         <p>No users found</p>
       ) : (
-        users.map((user) => (
-          <p key={user.UserID}>
-            {user.UserFirstname} {user.UserLastname}
-          </p>
-        ))
+        users.map((user) => <UserCard user={user} key={user.UserID} />)
       )}
     </section>
   );
