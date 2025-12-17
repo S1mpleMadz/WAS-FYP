@@ -1,5 +1,6 @@
 import { useParams } from "react-router-dom";
 import useLoad from "../../api/useLoad";
+import StaffForm from "./StaffForm";
 
 export default function SpecificUserInformation() {
   // Initialisation ----------------------------------------------
@@ -10,7 +11,19 @@ export default function SpecificUserInformation() {
     `/Users/${userId}`
   );
 
-  // Handlers ----------------------------------------------------
+  const userData = user[0];
+
+  // Context ----------------------------------------------------
+
+  // Methods ----------------------------------------------------
+
+  const handleModify = () => {};
+
+  const handleDelete = () => {};
+
+  const handleCancel = () => {};
+
+  const handleSubmit = () => {};
 
   // View --------------------------------------------------------
 
@@ -29,8 +42,6 @@ export default function SpecificUserInformation() {
       </div>
     );
   }
-
-  const userData = user[0];
 
   return (
     <>
@@ -63,6 +74,15 @@ export default function SpecificUserInformation() {
           </p>
         </div>
       </div>
+
+      <button onClick={handleModify}>Modify Staff</button>
+      <button onClick={handleDelete}>Delete Staff</button>
+
+      <StaffForm
+        onDismiss={handleCancel}
+        onSubmit={handleSubmit}
+        initialStaff={userData}
+      />
     </>
   );
 }
