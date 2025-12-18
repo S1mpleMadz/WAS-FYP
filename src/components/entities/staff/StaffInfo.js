@@ -1,11 +1,15 @@
 import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import API from "../../api/API";
 import useLoad from "../../api/useLoad";
 import StaffForm from "./StaffForm";
 
 export default function SpecificUserInformation() {
   // Initialisation ----------------------------------------------
   const { userId } = useParams();
-
+  const putUserEndpoint = "/users";
+  const navigate = useNavigate();
   // State -------------------------------------------------------
   const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
     `/Users/${userId}`
@@ -13,18 +17,42 @@ export default function SpecificUserInformation() {
 
   const userData = user[0];
 
+  const [showForm, setShowForm] = useState(false);
+
   // Context ----------------------------------------------------
 
   // Methods ----------------------------------------------------
 
-  const handleModify = () => {};
+  const goToStaffPage = () => {
+    navigate("/staff");
+  };
 
-  const handleDelete = () => {};
+  const handleModify = () => {
+    setShowForm(!showForm);
+  };
 
-  const handleCancel = () => {};
+  const handleDelete = async (id) => {
+    const response = await API.delete(`${putUserEndpoint}/${id}`);
+    goToStaffPage();
+  };
 
-  const handleSubmit = () => {};
+  const handleCancel = () => {
+    setShowForm(false);
+  };
 
+  const handleSubmit = async (userData) => {
+    const response = await API.put(
+      `${putUserEndpoint}/${userData.UserID}`,
+      userData
+    );
+
+    if (response.isSuccess) {
+      setShowForm(false);
+      window.location.reload();
+    }
+  };
+
+  console.log(userData);
   // View --------------------------------------------------------
 
   if (isUserLoading) {
@@ -76,13 +104,17 @@ export default function SpecificUserInformation() {
       </div>
 
       <button onClick={handleModify}>Modify Staff</button>
-      <button onClick={handleDelete}>Delete Staff</button>
+      <button onClick={() => handleDelete(userData.UserID)}>
+        Delete Staff
+      </button>
 
-      <StaffForm
-        onDismiss={handleCancel}
-        onSubmit={handleSubmit}
-        initialStaff={userData}
-      />
+      {showForm && (
+        <StaffForm
+          onDismiss={handleCancel}
+          onSubmit={handleSubmit}
+          initialStaff={userData}
+        />
+      )}
     </>
   );
 }

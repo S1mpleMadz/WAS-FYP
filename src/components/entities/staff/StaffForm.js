@@ -158,16 +158,18 @@ export default function StaffForm({
 
   const isValidStaff = (staff) => {
     let isStaffValid = true;
+    const newErrors = { ...errors };
 
-    Object.keys(staff).forEach((key) => {
+    Object.keys(isValid).forEach((key) => {
       if (isValid[key](staff[key])) {
-        errors[key] = null;
+        newErrors[key] = null;
       } else {
-        errors[key] = errorMessage[key];
+        newErrors[key] = errorMessage[key];
         isStaffValid = false;
       }
     });
 
+    setErrors(newErrors);
     return isStaffValid;
   };
 
@@ -175,10 +177,12 @@ export default function StaffForm({
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    isValidStaff(staff) && onSubmit(staff) && onDismiss();
-    setErrors({ ...errors });
-  };
 
+    if (isValidStaff(staff)) {
+      onSubmit(staff);
+      onDismiss();
+    }
+  };
   // View ------------------------------------
   return (
     // need to refacor this properly to get rid of formitem and see how it can be refactored
