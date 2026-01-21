@@ -39,21 +39,6 @@ function Navbar(props) {
           Research
         </NavLink>
       </div>
-      <div className="nav-item">
-        <NavLink to="/login" className={getLinkStyle}>
-          Login
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/signin" className={getLinkStyle}>
-          Sign In
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/404" className={getLinkStyle}>
-          404 Page
-        </NavLink>
-      </div>
     </nav>
   );
 }

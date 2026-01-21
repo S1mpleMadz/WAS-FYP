@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import "./StaffCard.css";
 
 export default function UserCard({ user }) {
   const navigate = useNavigate();

@@ -4,6 +4,7 @@ import { useState } from "react";
 import API from "../../api/API";
 import useLoad from "../../api/useLoad";
 import StaffForm from "./StaffForm";
+import "./StaffInfo.css";
 
 export default function SpecificUserInformation() {
   // Initialisation ----------------------------------------------
@@ -12,7 +13,7 @@ export default function SpecificUserInformation() {
   const navigate = useNavigate();
   // State -------------------------------------------------------
   const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
-    `/Users/${userId}`
+    `/Users/${userId}`,
   );
 
   const userData = user[0];
@@ -43,7 +44,7 @@ export default function SpecificUserInformation() {
   const handleSubmit = async (userData) => {
     const response = await API.put(
       `${putUserEndpoint}/${userData.UserID}`,
-      userData
+      userData,
     );
 
     if (response.isSuccess) {

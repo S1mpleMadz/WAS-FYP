@@ -13,9 +13,9 @@ function Header(props) {
   // View
   return (
     <header>
-      <Link to="/">Logo</Link>
+      <p1>James</p1>
       <Link to="/">
-        <h1>Header Component</h1>
+        <h1>Work Allocation System</h1>
       </Link>
     </header>
   );
