@@ -15,29 +15,20 @@ const emptyStaff = {
   WorkStatusID: 0,
 };
 
-export default function StaffForm({
-  onDismiss,
-  onSubmit,
-  initialStaff = emptyStaff,
-}) {
-  // Initialisation --------------------------
-
-  const isValid = {
-    UserTitle: (Title) => Title === "Mr" || Title === "Mrs" || Title === "Miss",
-    UserFirstname: (Firstname) => Firstname.length > 0,
-    UserLastname: (Lastname) => Lastname.length > 0,
-    UserEmail: (Email) =>
-      /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|.(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
-        Email
-      ),
-    UserImageURL: (ImageURL) => ImageURL.length > 0,
+// Moved outside to prevent re-creation on every render
+const validation = {
+  isValid: {
+    UserTitle: (val) => ["Mr", "Mrs", "Miss"].includes(val),
+    UserFirstname: (val) => val.length > 0,
+    UserLastname: (val) => val.length > 0,
+    UserEmail: (val) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val),
+    UserImageURL: (val) => val.length > 0,
     UserTypeID: (id) => id !== 0,
     PositionID: (id) => id !== 0,
     DepartmentID: (id) => id !== 0,
     WorkStatusID: (id) => id !== 0,
-  };
-
-  const errorMessage = {
+  },
+  messages: {
     UserTitle: "No Staff Title Has been Selected",
     UserFirstname: "Staff First Name is Empty",
     UserLastname: "Staff Last Name is Empty",
@@ -47,343 +38,176 @@ export default function StaffForm({
     PositionID: "No Staff Position Has been Selected",
     DepartmentID: "No Staff Department Has been Selected",
     WorkStatusID: "No Staff Work Status Has been Selected",
-  };
+  },
+};
 
-  // State -----------------------------------
-
+export default function StaffForm({
+  onDismiss,
+  onSubmit,
+  initialStaff = emptyStaff,
+}) {
   const [staff, setStaff] = useState(initialStaff);
+  const [errors, setErrors] = useState({});
 
-  const [errors, setErrors] = useState(
-    Object.keys(initialStaff).reduce(
-      (accum, key) => ({ ...accum, [key]: null }),
-      {}
-    )
-  );
-
-  // Types
-  const [types, setTypes] = useState(null);
-  const [loadingTypesMessage, setLoadingTypesMessage] = useState(
-    "Loading Recoards . . . "
-  );
-
-  const getTypes = async () => {
-    const response = await API.get("/types");
-
-    response.isSuccess
-      ? setTypes(response.result)
-      : setLoadingTypesMessage(response.message);
-  };
+  // Grouping all lookup data into one state object
+  const [lookups, setLookups] = useState({
+    types: null,
+    workstatus: null,
+    positions: null,
+    departments: null,
+  });
 
   useEffect(() => {
-    getTypes();
+    const loadAllData = async () => {
+      // Promise.all fetches all 4 endpoints at the same time (faster)
+      const [typeRes, workRes, posRes, depRes] = await Promise.all([
+        API.get("/types"),
+        API.get("/workstatus"),
+        API.get("/positions"),
+        API.get("/departments"),
+      ]);
+
+      setLookups({
+        types: typeRes.isSuccess ? typeRes.result : [],
+        workstatus: workRes.isSuccess ? workRes.result : [],
+        positions: posRes.isSuccess ? posRes.result : [],
+        departments: depRes.isSuccess ? depRes.result : [],
+      });
+    };
+    loadAllData();
   }, []);
 
-  // Work Sttaus of User
-
-  const [workstatus, setWorkStatus] = useState(null);
-  const [loadingWorkStatusMessage, setLoadingWorkStatusMessage] = useState(
-    "Loading Recoards . . . "
-  );
-
-  const getWorkStatus = async () => {
-    const response = await API.get("/workstatus");
-
-    response.isSuccess
-      ? setWorkStatus(response.result)
-      : setLoadingWorkStatusMessage(response.message);
-  };
-
-  useEffect(() => {
-    getWorkStatus();
-  }, []);
-
-  // Positions
-
-  const [positions, setPositionStatus] = useState(null);
-  const [loadingPositionMessage, setLoadingPositionMessage] = useState(
-    "Loading Recoards . . . "
-  );
-
-  const getPositionStatus = async () => {
-    const response = await API.get("/positions");
-
-    response.isSuccess
-      ? setPositionStatus(response.result)
-      : setLoadingPositionMessage(response.message);
-  };
-
-  useEffect(() => {
-    getPositionStatus();
-  }, []);
-
-  // Department
-
-  const [departments, setDepartmentStatus] = useState(null);
-  const [loadingDepartmentMessage, setLoadingDepartmentMessage] = useState(
-    "Loading Recoards . . . "
-  );
-
-  const getDepartmentStatus = async () => {
-    const response = await API.get("/departments");
-
-    response.isSuccess
-      ? setDepartmentStatus(response.result)
-      : setLoadingDepartmentMessage(response.message);
-  };
-
-  useEffect(() => {
-    getDepartmentStatus();
-  }, []);
-
-  // Handlers --------------------------------
-
-  const handleChange = (event) => {
-    const { name, value } = event.target;
-
-    const newValue =
-      name === "UserTypeID" ||
-      name === "PositionID" ||
-      name === "DepartmentID" ||
-      name === "WorkStatusID"
-        ? parseInt(value)
-        : value;
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    const newValue = name.includes("ID") ? parseInt(value) : value;
 
     setStaff({ ...staff, [name]: newValue });
-
     setErrors({
       ...errors,
-      [name]: isValid[name](newValue) ? null : errorMessage[name],
+      [name]: validation.isValid[name](newValue)
+        ? null
+        : validation.messages[name],
     });
   };
 
-  const isValidStaff = (staff) => {
+  const handleSubmit = (event) => {
+    event.preventDefault();
     let isStaffValid = true;
-    const newErrors = { ...errors };
+    const newErrors = {};
 
-    Object.keys(isValid).forEach((key) => {
-      if (isValid[key](staff[key])) {
-        newErrors[key] = null;
-      } else {
-        newErrors[key] = errorMessage[key];
+    Object.keys(validation.isValid).forEach((key) => {
+      if (!validation.isValid[key](staff[key])) {
+        newErrors[key] = validation.messages[key];
         isStaffValid = false;
       }
     });
 
     setErrors(newErrors);
-    return isStaffValid;
-  };
-
-  const handleCancel = () => onDismiss();
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-
-    if (isValidStaff(staff)) {
+    if (isStaffValid) {
       onSubmit(staff);
       onDismiss();
     }
   };
-  // View ------------------------------------
-  return (
-    // need to refacor this properly to get rid of formitem and see how it can be refactored
 
-    <form className="BorderedForm">
-      <FormItem
-        label="User Title"
-        htmlFor="UserTitle"
-        advice="Please Enter Staff Title"
-        error={errors.UserTitle}
-      >
+  const selectConfigs = [
+    {
+      label: "User Type",
+      name: "UserTypeID",
+      data: lookups.types,
+      key: "UserTypeID",
+      text: "TypeName",
+    },
+    {
+      label: "Work Status",
+      name: "WorkStatusID",
+      data: lookups.workstatus,
+      key: "WorkStatusID",
+      text: "WorkTypeName",
+    },
+    {
+      label: "Position",
+      name: "PositionID",
+      data: lookups.positions,
+      key: "PositionID",
+      text: "PositionName",
+    },
+    {
+      label: "Department",
+      name: "DepartmentID",
+      data: lookups.departments,
+      key: "DepartmentID",
+      text: "DepartmentName",
+    },
+  ];
+
+  return (
+    <form className="BorderedForm" onSubmit={handleSubmit}>
+      <FormItem label="User Title" error={errors.UserTitle}>
         <select
           name="UserTitle"
           value={staff.UserTitle}
           onChange={handleChange}
         >
-          <option value="" disabled>
-            None Selected
-          </option>
-          {["Mr", "Mrs", "Miss"].map((title) => (
-            <option key={title}>{title}</option>
+          <option value="">None Selected</option>
+          {["Mr", "Mrs", "Miss"].map((t) => (
+            <option key={t} value={t}>
+              {t}
+            </option>
           ))}
         </select>
       </FormItem>
 
-      <FormItem
-        label="Staff First Name"
-        htmlFor="UserFirstname"
-        advice="Please Enter Staff First Name"
-        error={errors.UserFirstname}
-      >
-        <input
-          type="text"
-          name="UserFirstname"
-          value={staff.UserFirstname}
-          onChange={handleChange}
-        />
-      </FormItem>
-
-      <FormItem
-        label="Staff Last Name"
-        htmlFor="UserLastname"
-        advice="Please Enter Staff Last Name"
-        error={errors.UserLastname}
-      >
-        <input
-          type="text"
-          name="UserLastname"
-          value={staff.UserLastname}
-          onChange={handleChange}
-        />
-      </FormItem>
-
-      <FormItem
-        label="Staff Email Address"
-        htmlFor="UserEmail"
-        advice="Please Enter Staff Email Address"
-        error={errors.UserEmail}
-      >
-        <input
-          type="text"
-          name="UserEmail"
-          value={staff.UserEmail}
-          onChange={handleChange}
-        />
-      </FormItem>
-
-      <FormItem
-        label="Staff Picture URL"
-        htmlFor="UserImageURL"
-        advice="Please Enter Staff Image URL"
-        error={errors.UserImageURL}
-      >
-        <input
-          type="text"
-          name="UserImageURL"
-          value={staff.UserImageURL}
-          onChange={handleChange}
-        />
-      </FormItem>
-
-      <FormItem
-        label="User Type / Position / Role"
-        htmlFor="UserTypeID"
-        advice="Select Staff Type/Position/Role"
-        error={errors.UserTypeID}
-      >
-        {!types ? (
-          <p>{loadingTypesMessage}</p>
-        ) : types.length === 0 ? (
-          <p> No User Types</p>
-        ) : (
-          <select
-            name="UserTypeID"
-            value={staff.UserTypeID}
+      {[
+        { label: "First Name", name: "UserFirstname" },
+        { label: "Last Name", name: "UserLastname" },
+        { label: "Email", name: "UserEmail" },
+        { label: "Image URL", name: "UserImageURL" },
+      ].map((field) => (
+        <FormItem
+          key={field.name}
+          label={field.label}
+          error={errors[field.name]}
+        >
+          <input
+            type="text"
+            name={field.name}
+            value={staff[field.name]}
             onChange={handleChange}
-          >
-            <option value="0" disable>
-              None Selected
-            </option>
-            {types.map((type) => (
-              <option key={type.UserTypeID} value={type.UserTypeID}>
-                {type.TypeName}
-              </option>
-            ))}
-          </select>
-        )}
-      </FormItem>
+          />
+        </FormItem>
+      ))}
 
-      <FormItem
-        label="Work Status"
-        htmlFor="WorkStatusID"
-        advice="Select Staff Work Status"
-        error={errors.WorkStatusID}
-      >
-        {!workstatus ? (
-          <p>{loadingWorkStatusMessage}</p>
-        ) : workstatus.length === 0 ? (
-          <p> No User Work Status</p>
-        ) : (
-          <select
-            name="WorkStatusID"
-            value={staff.WorkStatusID}
-            onChange={handleChange}
-          >
-            <option value="0" disable>
-              None Selected
-            </option>
-            {workstatus.map((workstate) => (
-              <option
-                key={workstate.WorkStatusID}
-                value={workstate.WorkStatusID}
-              >
-                {workstate.WorkTypeName}
-              </option>
-            ))}
-          </select>
-        )}
-      </FormItem>
+      {selectConfigs.map((config) => (
+        <FormItem
+          key={config.name}
+          label={config.label}
+          error={errors[config.name]}
+        >
+          {!config.data ? (
+            <p>Loading...</p>
+          ) : (
+            <select
+              name={config.name}
+              value={staff[config.name]}
+              onChange={handleChange}
+            >
+              <option value="0">None Selected</option>
+              {config.data.map((item) => (
+                <option key={item[config.key]} value={item[config.key]}>
+                  {item[config.text]}
+                </option>
+              ))}
+            </select>
+          )}
+        </FormItem>
+      ))}
 
-      <FormItem
-        label="Staff Position"
-        htmlFor="PositionID"
-        advice="Select Staff Position"
-        error={errors.PositionID}
-      >
-        {!positions ? (
-          <p>{loadingPositionMessage}</p>
-        ) : positions.length === 0 ? (
-          <p> No User positions</p>
-        ) : (
-          <select
-            name="PositionID"
-            value={staff.PositionID}
-            onChange={handleChange}
-          >
-            <option value="0" disable>
-              None Selected
-            </option>
-            {positions.map((position) => (
-              <option key={position.PositionID} value={position.PositionID}>
-                {position.PositionName}
-              </option>
-            ))}
-          </select>
-        )}
-      </FormItem>
-
-      <FormItem
-        label="Staff Department"
-        htmlFor="DepartmentID"
-        advice="Select Staff Department"
-        error={errors.DepartmentID}
-      >
-        {!departments ? (
-          <p>{loadingDepartmentMessage}</p>
-        ) : departments.length === 0 ? (
-          <p> No User positions</p>
-        ) : (
-          <select
-            name="DepartmentID"
-            value={staff.DepartmentID}
-            onChange={handleChange}
-          >
-            <option value="0" disable>
-              None Selected
-            </option>
-            {departments.map((department) => (
-              <option
-                key={department.DepartmentID}
-                value={department.DepartmentID}
-              >
-                {department.DepartmentName}
-              </option>
-            ))}
-          </select>
-        )}
-      </FormItem>
-
-      <button onClick={handleSubmit}>Submit</button>
-      <button onClick={handleCancel}>Cancel</button>
+      <div className="button-group">
+        <button type="submit">Submit</button>
+        <button type="button" onClick={onDismiss}>
+          Cancel
+        </button>
+      </div>
     </form>
   );
 }

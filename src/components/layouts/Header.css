@@ -1,0 +1,15 @@
+/* Header.css */
+header {
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  padding: 12px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header h1 {
+  font-size: 1.1rem;
+  color: #0f172a;
+  font-weight: 700;
+}

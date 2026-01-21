@@ -1,6 +1,6 @@
 import "./Form.css";
 
-export default function FormItem({ children, label, htmlFor, advice, error }) {
+export default function FormItem({ children, label, advice, error }) {
   // Initialisation --------------------------
 
   // State -----------------------------------
@@ -11,11 +11,12 @@ export default function FormItem({ children, label, htmlFor, advice, error }) {
 
   return (
     <div className="FormItem">
-      <label className="FormLabel" htmlFor={htmlFor}>
-        {label}
-      </label>
+      <label className="FormLabel">{label}</label>
       {advice && <p className="FormAdvice">{advice}</p>}
-      {children}
+
+      {/* The input/select is passed as children */}
+      <div className="FormInputContainer">{children}</div>
+
       {error && <p className="FormError">{error}</p>}
     </div>
   );

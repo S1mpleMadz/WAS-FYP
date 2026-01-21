@@ -1,0 +1,29 @@
+:root {
+  --primary-color: #0056b3;
+  --bg-color: #f4f7f6;
+  --text-color: #333;
+  --border-radius: 8px;
+  --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+body {
+  margin: 0;
+  background-color: var(--bg-color);
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: var(--text-color);
+}
+
+.centrepane {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* Keeps footer at bottom */
+  max-width: 1200px;
+  margin: 0 auto;
+  background: white;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+}
+
+main {
+  flex: 1;
+  padding: 40px;
+}

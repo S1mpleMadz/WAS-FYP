@@ -1,0 +1,23 @@
+nav {
+  display: flex;
+  gap: 8px;
+}
+
+.nav-item a {
+  padding: 8px 16px;
+  border-radius: 6px;
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.nav-item a:hover {
+  background: #f1f5f9;
+  color: var(--primary-color);
+}
+
+.navSelected {
+  background: #eff6ff !important;
+  color: var(--primary-color) !important;
+}
