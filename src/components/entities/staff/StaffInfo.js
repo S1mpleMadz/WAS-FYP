@@ -1,121 +1,97 @@
-import { useParams } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import API from "../../api/API";
 import useLoad from "../../api/useLoad";
-import StaffForm from "./StaffForm";
+import StaffForm from "./StaffForm.js";
+import Action from "../../UI/Actions.js"; // Import Action UI
+import Modal, { useModal } from "../../UI/Modal.js"; // Import Modal UI
 import "./StaffInfo.css";
 
 export default function SpecificUserInformation() {
-  // Initialisation ----------------------------------------------
   const { userId } = useParams();
-  const putUserEndpoint = "/users";
   const navigate = useNavigate();
-  // State -------------------------------------------------------
-  const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
-    `/Users/${userId}`,
-  );
 
-  const userData = user[0];
+  // Use Modal for Edit Form
+  const [showModal, modalContent, openModal, closeModal] = useModal(false);
 
-  const [showForm, setShowForm] = useState(false);
+  // Data Loading
+  const [user, isUserLoading, loadingMessage] = useLoad(`/Users/${userId}`);
+  const userData = user ? user[0] : null;
 
-  // Context ----------------------------------------------------
-
-  // Methods ----------------------------------------------------
-
-  const goToStaffPage = () => {
-    navigate("/staff");
+  // Handlers
+  const handleDelete = async () => {
+    // In a real app, you might want a "Are you sure?" modal here
+    const response = await API.delete(`/users/${userId}`);
+    if (response.isSuccess) navigate("/staff");
   };
 
-  const handleModify = () => {
-    setShowForm(!showForm);
-  };
-
-  const handleDelete = async (id) => {
-    const response = await API.delete(`${putUserEndpoint}/${id}`);
-    goToStaffPage();
-  };
-
-  const handleCancel = () => {
-    setShowForm(false);
-  };
-
-  const handleSubmit = async (userData) => {
+  const handleEditSubmit = async (updatedStaff) => {
     const response = await API.put(
-      `${putUserEndpoint}/${userData.UserID}`,
-      userData,
+      `/users/${updatedStaff.UserID}`,
+      updatedStaff,
     );
-
     if (response.isSuccess) {
-      setShowForm(false);
-      window.location.reload();
+      closeModal();
+      window.location.reload(); // Simple reload to fetch fresh data
     }
   };
 
-  console.log(userData);
-  // View --------------------------------------------------------
-
-  if (isUserLoading) {
-    return (
-      <div className="userInfo">
-        <p>{loadingMessage}</p>
-      </div>
+  const openEditModal = () => {
+    openModal(
+      <StaffForm
+        initialStaff={userData}
+        onDismiss={closeModal}
+        onSubmit={handleEditSubmit}
+      />,
     );
-  }
+  };
 
-  if (!user || user.length === 0) {
-    return (
-      <div className="userInfo">
-        <p>User not found.</p>
-      </div>
-    );
-  }
+  // View
+  if (isUserLoading || !userData)
+    return <p>{loadingMessage || "User not found"}</p>;
 
   return (
-    <>
-      <div className="userInfo">
-        <img src={userData.UserImageURL} />
-        <div className="userInfoDetails">
-          <p>
-            <strong>Title:</strong>
-            {userData.UserTitle}
-          </p>
-          <p>
-            <strong>First Name:</strong>
-            {userData.UserFirstname}
-          </p>
-          <p>
-            <strong>Last Name:</strong>
+    <div className="staff-info-container">
+      {/* Modal for Editing */}
+      <Modal show={showModal} title="Modify Staff Member">
+        {modalContent}
+      </Modal>
+
+      <div className="staff-profile-header">
+        <img src={userData.UserImageURL} alt="Profile" />
+        <div className="header-text">
+          <h1>
+            {userData.UserTitle} {userData.UserFirstname}{" "}
             {userData.UserLastname}
-          </p>
-          <p>
-            <strong>Email:</strong>
-            {userData.UserEmail}
-          </p>
-          <p>
-            <strong>Type:</strong>
-            {userData.UserTypeName}
-          </p>
-          <p>
-            <strong>Position:</strong>
-            {userData.PositionName}
-          </p>
+          </h1>
+          <p>{userData.PositionName}</p>
         </div>
       </div>
 
-      <button onClick={handleModify}>Modify Staff</button>
-      <button onClick={() => handleDelete(userData.UserID)}>
-        Delete Staff
-      </button>
+      <div className="staff-data-grid">
+        <div className="data-row">
+          <strong>Email:</strong> <span>{userData.UserEmail}</span>
+        </div>
+        <div className="data-row">
+          <strong>Department:</strong>{" "}
+          <span>{userData.DepartmentName || "N/A"}</span>
+        </div>
+        <div className="data-row">
+          <strong>Type:</strong> <span>{userData.UserTypeName}</span>
+        </div>
+      </div>
 
-      {showForm && (
-        <StaffForm
-          onDismiss={handleCancel}
-          onSubmit={handleSubmit}
-          initialStaff={userData}
-        />
-      )}
-    </>
+      <div className="action-bar">
+        <Action.Tray>
+          <Action.Modify showText buttonText="Modify" onClick={openEditModal} />
+          <Action.Delete showText buttonText="Delete" onClick={handleDelete} />
+          <Action.Cancel
+            showText
+            buttonText="Back"
+            onClick={() => navigate("/staff")}
+          />
+        </Action.Tray>
+      </div>
+    </div>
   );
 }

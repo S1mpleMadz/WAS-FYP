@@ -1,0 +1,44 @@
+/* Update the import to point to a CSS file, not SCSS */
+@import "./global.css";
+
+div.cardContainer {
+  /* Replaced $tertiaryColour with the CSS variable */
+  background-color: var(--tertiaryColour);
+  /* If hardcoded: background-color: #1e3c72; */
+
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Flattened nesting: div.cardContainer -> div.card */
+div.cardContainer div.card {
+  padding: 10px; /* Note: The padding below overrides this line */
+  background-color: white;
+  border-radius: 10px;
+  padding: 0.8rem 2rem;
+  margin: 0 auto;
+  /* box-shadow: 2px 2px 2px 2px rgba(70, 70, 70, 0.3); */
+}
+
+/* Flattened nesting: div.card -> img */
+div.cardContainer div.card img {
+  width: 100%;
+  display: block;
+  border-radius: 0 0 30px 30px;
+}
+
+/* Flattened nesting: Hover state */
+div.cardContainer div.card:hover {
+  /* Replaced $secondaryColour */
+  background-color: var(--secondaryColour);
+  /* If hardcoded: background-color: #190b28; */
+
+  color: white !important;
+  box-shadow: 2px 2px 2px 2px rgba(70, 70, 70, 0.3);
+  transition: 0.3s ease-in-out;
+}

@@ -1,0 +1,64 @@
+@import "./global.css";
+
+/* -------------------------------------------- */
+/* Styling //////////////////////////////////// */
+/* -------------------------------------------- */
+
+div.ActionTray {
+  /* Layout */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+
+button.Action {
+  /* Appearance */
+  height: 36px;
+  padding: 5px;
+  background: inherit;
+
+  /* UPDATED: Use the CSS variable syntax */
+  border: 2px solid var(--tertiaryColour);
+  /* OR hardcoded if not using variables: border: 2px solid #1e3c72; */
+
+  border-radius: 12px;
+  cursor: pointer;
+  background-color: white;
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* UPDATED: Flattened nesting */
+button.Action p {
+  flex: 1;
+  min-width: 50px;
+  text-align: center;
+  margin-right: 5px;
+  color: rgba(0, 0, 0, 0.836);
+  font-size: 14px;
+}
+
+/* UPDATED: Flattened nesting */
+button.Action img {
+  filter: opacity(0.8);
+}
+
+/* UPDATED: Flattened nesting & hover state */
+button.Action:hover {
+  transform: scale(1.05);
+}
+
+/* UPDATED: Hover state specific to the p tag inside the button */
+button.Action:hover p {
+  color: rgba(0, 0, 0, 0.8);
+}
+
+/* UPDATED: Hover state specific to the img tag inside the button */
+button.Action:hover img {
+  filter: opacity(0.8);
+}

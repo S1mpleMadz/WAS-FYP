@@ -1,20 +1,28 @@
-import { useState, useEffect } from "react";
-import StaffForm from "../entities/staff/StaffForm.js";
+import { useEffect, useState } from "react";
 import API from "../api/API.js";
-import UserCard from "../entities/staff/StaffCard.js";
+import Action from "../UI/Actions.js"; // Importing your Action UI
+import { CardContainer } from "../UI/Card.js"; // Importing your Card UI
+import Modal, { useModal } from "../UI/Modal.js"; // Importing your Modal UI
+import StaffForm from "../entities/staff/StaffForm";
+import StaffCard from "../entities/staff/StaffCard.js";
+import "./Staff.css";
 
 function Staff() {
-  const endpoint = "/users";
-  const [users, setUsers] = useState(null); // Initialized as null to track loading state
+  // State ---------------------------------------
+  const [users, setUsers] = useState(null);
   const [loadingMessage, setLoadingMessage] = useState("Loading records...");
-  const [showNewStaffForm, setShowNewStaffForm] = useState(false);
 
+  // Use your provided Modal Hook
+  const [showModal, modalContent, openModal, closeModal] = useModal(false);
+
+  // Methods -------------------------------------
   const getStaff = async () => {
     const response = await API.get("/users");
     if (response.isSuccess) {
       setUsers(response.result);
     } else {
       setLoadingMessage(response.message);
+      setUsers([]);
     }
   };
 
@@ -22,54 +30,58 @@ function Staff() {
     getStaff();
   }, []);
 
-  const handleAdd = () => setShowNewStaffForm(true);
-  const handleDismissAdd = () => setShowNewStaffForm(false);
-
   const handleSubmit = async (staff) => {
-    const response = await API.post(endpoint, staff);
+    const response = await API.post("/users", staff);
     if (response.isSuccess) {
-      getStaff();
+      closeModal(); // Close modal on success
+      getStaff(); // Refresh list
       return true;
     }
     return false;
   };
 
+  const handleDismiss = () => {
+    closeModal();
+  };
+
+  // Open the modal with the StaffForm component inside it
+  const handleAdd = () => {
+    openModal(<StaffForm onDismiss={handleDismiss} onSubmit={handleSubmit} />);
+  };
+
+  // View ----------------------------------------
   return (
-    <section>
-      {/* 1. RESTORED FORM RENDERING */}
-      {showNewStaffForm && (
-        <StaffForm onDismiss={handleDismissAdd} onSubmit={handleSubmit} />
-      )}
+    <section className="staff-page">
+      {/* Render the Modal Component */}
+      <Modal show={showModal} title="Add New Staff Member">
+        {modalContent}
+      </Modal>
 
-      <div className="staff-container">
-        <div className="staff-header">
-          <h2>Staff Members</h2>
-          <p>View and manage staff assignments</p>
-          <button className="btn-add" onClick={handleAdd}>
-            + Add Staff
-          </button>
-        </div>
+      <div className="staff-header">
+        <h1>Staff Directory</h1>
 
-        <div className="staff-table">
-          <div className="table-row table-head">
-            <span>STAFF MEMBER</span>
-            <span>ROLE</span>
-            <span>MODULES</span>
-            <span>DUTIES</span>
-            <span>TOTAL HOURS</span>
-            <span></span>
-          </div>
-
-          {/* 2. ADDED GUARD AND LOADING LOGIC */}
-          {!users ? (
-            <div className="p-10 text-center">{loadingMessage}</div>
-          ) : users.length === 0 ? (
-            <div className="p-10 text-center">No users found.</div>
-          ) : (
-            users.map((user) => <UserCard user={user} key={user.UserID} />)
-          )}
-        </div>
+        {/* Use the Action Tray UI */}
+        <Action.Tray>
+          <Action.Add showText buttonText="Add Staff" onClick={handleAdd} />
+          <Action.ListAll showText buttonText="List All" onClick={getStaff} />
+        </Action.Tray>
       </div>
+
+      <hr className="divider" />
+
+      {/* Logic for Loading / Error / Success */}
+      {!users ? (
+        <p className="status-message">{loadingMessage}</p>
+      ) : users.length === 0 ? (
+        <p className="status-message">No staff members found.</p>
+      ) : (
+        /* Use the CardContainer UI */
+        <CardContainer>
+          {users.map((user) => (
+            <StaffCard user={user} key={user.UserID} />
+          ))}
+        </CardContainer>
+      )}
     </section>
   );
 }
