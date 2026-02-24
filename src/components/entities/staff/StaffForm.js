@@ -61,7 +61,7 @@ export default function StaffForm({
     const loadAllData = async () => {
       // Promise.all fetches all 4 endpoints at the same time (faster)
       const [typeRes, workRes, posRes, depRes] = await Promise.all([
-        API.get("/types"),
+        API.get("/usertypes"),
         API.get("/workstatus"),
         API.get("/positions"),
         API.get("/departments"),
