@@ -1,3 +1,3 @@
-export const API_URL = "http://localhost:5000/api";
+export const API_URL = "https://madzs1mple.uk/api";
 
 export default API_URL;
