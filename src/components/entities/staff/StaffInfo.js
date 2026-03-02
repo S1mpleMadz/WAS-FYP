@@ -3,8 +3,8 @@ import { useState } from "react";
 import API from "../../api/API";
 import useLoad from "../../api/useLoad";
 import StaffForm from "./StaffForm.js";
-import Action from "../../UI/Actions.js"; // Import Action UI
-import Modal, { useModal } from "../../UI/Modal.js"; // Import Modal UI
+import Action from "../../UI/Actions.js";
+import Modal, { useModal } from "../../UI/Modal.js";
 import "./StaffInfo.css";
 
 export default function SpecificUserInformation() {
@@ -20,7 +20,6 @@ export default function SpecificUserInformation() {
 
   // Handlers
   const handleDelete = async () => {
-    // In a real app, you might want a "Are you sure?" modal here
     const response = await API.delete(`/users/${userId}`);
     if (response.isSuccess) navigate("/staff");
   };
@@ -32,7 +31,7 @@ export default function SpecificUserInformation() {
     );
     if (response.isSuccess) {
       closeModal();
-      window.location.reload(); // Simple reload to fetch fresh data
+      window.location.reload();
     }
   };
 
@@ -52,7 +51,6 @@ export default function SpecificUserInformation() {
 
   return (
     <div className="staff-info-container">
-      {/* Modal for Editing */}
       <Modal show={showModal} title="Modify Staff Member">
         {modalContent}
       </Modal>

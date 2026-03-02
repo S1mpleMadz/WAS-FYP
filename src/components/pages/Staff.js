@@ -1,11 +1,9 @@
 import { useEffect, useState } from "react";
 import API from "../api/API.js";
 import Action from "../UI/Actions.js"; // Importing your Action UI
-import { CardContainer } from "../UI/Card.js"; // Importing your Card UI
 import Modal, { useModal } from "../UI/Modal.js"; // Importing your Modal UI
 import StaffForm from "../entities/staff/StaffForm";
 import StaffCard from "../entities/staff/StaffCard.js";
-import "./Staff.css";
 
 function Staff() {
   // State ---------------------------------------
@@ -52,7 +50,6 @@ function Staff() {
   // View ----------------------------------------
   return (
     <section className="staff-page">
-      {/* Render the Modal Component */}
       <Modal show={showModal} title="Add New Staff Member">
         {modalContent}
       </Modal>
@@ -60,7 +57,6 @@ function Staff() {
       <div className="staff-header">
         <h1>Staff Directory</h1>
 
-        {/* Use the Action Tray UI */}
         <Action.Tray>
           <Action.Add showText buttonText="Add Staff" onClick={handleAdd} />
           <Action.ListAll showText buttonText="List All" onClick={getStaff} />
@@ -69,18 +65,16 @@ function Staff() {
 
       <hr className="divider" />
 
-      {/* Logic for Loading / Error / Success */}
       {!users ? (
         <p className="status-message">{loadingMessage}</p>
       ) : users.length === 0 ? (
         <p className="status-message">No staff members found.</p>
       ) : (
-        /* Use the CardContainer UI */
-        <CardContainer>
+        <div className="staff-list">
           {users.map((user) => (
             <StaffCard user={user} key={user.UserID} />
           ))}
-        </CardContainer>
+        </div>
       )}
     </section>
   );
