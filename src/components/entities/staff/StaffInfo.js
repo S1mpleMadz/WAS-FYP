@@ -3,8 +3,8 @@ import { useState } from "react";
 import API from "../../api/API";
 import useLoad from "../../api/useLoad";
 import StaffForm from "./StaffForm.js";
-import Action from "../../UI/Actions.js"; // Import Action UI
-import Modal, { useModal } from "../../UI/Modal.js"; // Import Modal UI
+import Action from "../../UI/Actions.js";
+import Modal, { useModal } from "../../UI/Modal.js";
 import "./StaffInfo.css";
 
 export default function SpecificUserInformation() {

@@ -1,5 +1,3 @@
-import "./Form.css";
-
 export default function FormItem({ children, label, advice, error }) {
   // Initialisation --------------------------
 
