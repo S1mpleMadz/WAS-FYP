@@ -20,7 +20,6 @@ export default function SpecificUserInformation() {
 
   // Handlers
   const handleDelete = async () => {
-    // In a real app, you might want a "Are you sure?" modal here
     const response = await API.delete(`/users/${userId}`);
     if (response.isSuccess) navigate("/staff");
   };
@@ -32,7 +31,7 @@ export default function SpecificUserInformation() {
     );
     if (response.isSuccess) {
       closeModal();
-      window.location.reload(); // Simple reload to fetch fresh data
+      window.location.reload();
     }
   };
 

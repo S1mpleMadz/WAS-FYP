@@ -70,7 +70,6 @@ function Staff() {
       ) : users.length === 0 ? (
         <p className="status-message">No staff members found.</p>
       ) : (
-        /* FIX 3: JSX expressions inside a return must be wrapped in a container or Fragment */
         <div className="staff-list">
           {users.map((user) => (
             <StaffCard user={user} key={user.UserID} />
