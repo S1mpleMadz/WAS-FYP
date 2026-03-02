@@ -51,7 +51,6 @@ export default function SpecificUserInformation() {
 
   return (
     <div className="staff-info-container">
-      {/* Modal for Editing */}
       <Modal show={showModal} title="Modify Staff Member">
         {modalContent}
       </Modal>

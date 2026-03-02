@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import Action from "../../UI/Actions.js"; // Use your Action UI
+import Action from "../../UI/Actions.js";
 import "./StaffCard.css";
 
 export default function StaffCard({ user }) {
@@ -9,7 +9,6 @@ export default function StaffCard({ user }) {
     navigate(`/UserInformation/${user.UserID}`);
   };
 
-  // Fallback image if user has none
   const imageSrc =
     user.UserImageURL && user.UserImageURL.length > 5
       ? user.UserImageURL
@@ -27,7 +26,6 @@ export default function StaffCard({ user }) {
         <span className="staff-tag">{user.UserTypeName}</span>
       </div>
 
-      {/* Action Tray for specific card actions */}
       <div className="staff-actions">
         <Action.Tray>
           <Action.Expand onClick={handleView} />

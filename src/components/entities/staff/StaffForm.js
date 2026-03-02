@@ -15,7 +15,6 @@ const emptyStaff = {
   WorkStatusID: 0,
 };
 
-// Moved outside to prevent re-creation on every render
 const validation = {
   isValid: {
     UserTitle: (val) => ["Mr", "Mrs", "Miss"].includes(val),
@@ -49,7 +48,6 @@ export default function StaffForm({
   const [staff, setStaff] = useState(initialStaff);
   const [errors, setErrors] = useState({});
 
-  // Grouping all lookup data into one state object
   const [lookups, setLookups] = useState({
     types: null,
     workstatus: null,
@@ -59,7 +57,6 @@ export default function StaffForm({
 
   useEffect(() => {
     const loadAllData = async () => {
-      // Promise.all fetches all 4 endpoints at the same time (faster)
       const [typeRes, workRes, posRes, depRes] = await Promise.all([
         API.get("/usertypes"),
         API.get("/workstatus"),
