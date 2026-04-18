@@ -13,7 +13,7 @@ export default function SpecificUserInformation() {
   const { userId } = useParams();
   const navigate = useNavigate();
 
-  const teachingEndpoint = `/teaching/users/${userId}`;
+  const teachingEndpoint = `/teaching/user/${userId}`;
   const teachingDutyEndpoint = `/myduties/users/${userId}`;
 
   const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
@@ -27,33 +27,43 @@ export default function SpecificUserInformation() {
 
   const [teaching, isTeachingLoading, teachingLoadingMessage] =
     useLoad(teachingEndpoint);
-  const [teachingDuty] = useLoad(teachingDutyEndpoint);
+  const [teachingDuty, isDutyLoading, dutyLoadingMessage] = useLoad(teachingDutyEndpoint);
 
   const teachingColumns = [
-    { header: "Module Name", key: "TeachingModuleName" },
     {
-      header: "Lecturing Hours",
+      header: "Module",
+      key: "ModuleName",
+      render: (row) => `${row.ModuleCode} – ${row.ModuleName}`,
+    },
+    {
+      header: "Leading %",
+      key: "TeachingLeading",
+      className: "center",
+      render: (row) => `${parseFloat(row.TeachingLeading)}%`,
+    },
+    {
+      header: "Lecturing %",
       key: "TeachingLecturing",
       className: "center",
-      render: (row) => `${row.TeachingLeading}%`,
+      render: (row) => `${parseFloat(row.TeachingLecturing)}%`,
     },
     {
-      header: "Workshop Hours",
+      header: "Workshops %",
       key: "TeachingWorkshops",
       className: "center",
-      render: (row) => `${row.TeachingLecturing}%`,
+      render: (row) => `${parseFloat(row.TeachingWorkshops)}%`,
     },
     {
-      header: "Assessment Hours",
+      header: "Assessing %",
       key: "TeachingAssessing",
       className: "center",
-      render: (row) => `${row.TeachingAssessing}%`,
+      render: (row) => `${parseFloat(row.TeachingAssessing)}%`,
     },
     {
-      header: "Moderation Hours",
+      header: "Moderation",
       key: "TeachingModeration",
       className: "center",
-      render: (row) => `${row.TeachingModeration}%`,
+      render: (row) => (parseFloat(row.TeachingModeration) !== 0 ? "Yes" : "No"),
     },
   ];
 
@@ -188,13 +198,13 @@ export default function SpecificUserInformation() {
           Duties that have been assigned to this Staff member
         </h3>
 
-        {isTeachingLoading ? (
-          <p>Loading teaching data: {teachingLoadingMessage}</p>
+        {isDutyLoading ? (
+          <p>Loading duties: {dutyLoadingMessage}</p>
         ) : (
           <Table
             columns={teachingDutyColumns}
             data={teachingDuty}
-            emptyMessage="No Duties have been assigned to this user."
+            emptyMessage="No duties have been assigned to this user."
           />
         )}
       </div>
