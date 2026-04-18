@@ -1,14 +1,15 @@
+import DutyCruddler from "../entities/duty/DutyCruddler.js";
+
 function Duties() {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welome to duties</h1>;
+  return (
+    <section className="duties-page">
+      <div className="duties-header">
+        <h1>Duties</h1>
+      </div>
+      <hr className="divider" />
+      <DutyCruddler endpoint="/duty" />
+    </section>
+  );
 }
 
 export default Duties;

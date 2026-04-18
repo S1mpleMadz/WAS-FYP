@@ -1,0 +1,21 @@
+.dutyCard {
+  cursor: pointer;
+}
+
+.duty-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 160px;
+}
+
+.duty-name {
+  font-weight: 700;
+  color: var(--col-text);
+  font-size: 0.95rem;
+}
+
+.duty-info {
+  font-size: 0.8rem;
+  color: var(--col-text-muted);
+}

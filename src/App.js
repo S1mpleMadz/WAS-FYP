@@ -10,6 +10,9 @@ import SignIn from "./components/pages/SignIn.js";
 import Staff from "./components/pages/Staff.js";
 import Research from "./components/pages/Research.js";
 import SpecificUserInformation from "./components/entities/MoreUserInfo/UserInfoCard.js";
+import SpecificModuleInformation from "./components/entities/MoreModuleInfo/ModuleInfoCard.js";
+import SpecificDutyInformation from "./components/entities/MoreDutyInfo/DutyInfoCard.js";
+import SpecificResearchInformation from "./components/entities/MoreResearchInfo/ResearchInfoCard.js";
 import "./App.css";
 
 function App() {
@@ -27,6 +30,18 @@ function App() {
           <Route
             path="/UserInformation/:userId"
             element={<SpecificUserInformation />}
+          />
+          <Route
+            path="/ModuleInformation/:moduleId"
+            element={<SpecificModuleInformation />}
+          />
+          <Route
+            path="/DutyInformation/:dutyId"
+            element={<SpecificDutyInformation />}
+          />
+          <Route
+            path="/ResearchInformation/:researchId"
+            element={<SpecificResearchInformation />}
           />
           <Route path="*" element={<PageNotFound />} />
         </Routes>
