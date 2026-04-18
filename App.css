@@ -1,0 +1,21 @@
+.root {
+  --primary-color: #ff5733;
+  --secondary-color: #33c4ff;
+  --accent-color: #ffc333;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.mt {
+  margin-top: 1rem;
+}
+
+.mb {
+  margin-bottom: 1rem;
+}
+
+.p {
+  padding: 1rem;
+}
