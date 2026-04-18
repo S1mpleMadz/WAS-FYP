@@ -1,13 +1,13 @@
 div.notificationAlert header {
-  background-color: dodgerblue !important;
+  background-color: var(--col-accent) !important;
 }
 
 div.notificationConfirm header {
-  background-color: orange !important;
+  background-color: var(--col-warning) !important;
 }
 
 div.notificationError header {
-  background-color: red !important;
+  background-color: var(--col-error) !important;
 }
 
 div.notificationAlert main p,
@@ -15,4 +15,5 @@ div.notificationConfirm main p,
 div.notificationError main p {
   min-width: 200px;
   text-align: center;
+  color: var(--col-text);
 }

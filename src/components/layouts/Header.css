@@ -2,53 +2,25 @@ header {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 10px 18px;
-  background: #2b97e4;
+  padding: 14px 24px;
+  background-color: var(--col-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-header .headerText {
-  display: flex;
-  flex-direction: column;
+header .header-brand {
+  text-decoration: none;
 }
 
-header .headerText h1 {
+header .header-brand h1 {
   color: white;
-  margin: 0;
-  font-size: 30px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
 }
 
-header .headerActions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-header .headerActions .welcome {
-  color: white;
-  margin: 0;
-  font-size: 14px;
-  white-space: nowrap;
-}
-
-header .headerActions button {
-  padding: 6px 12px;
-  background-color: white;
-  border: 2px solid transparent;
-  border-radius: 4px;
-  color: #2b97e4;
-  font-weight: 600;
-  cursor: pointer;
-  font-size: 14px;
-  transition: background-color 0.3s ease;
-}
-
-header .headerActions button:hover {
-  background-color: #f2f2f2;
-}
-
-header .headerActions .logo {
-  width: 45px;
-  height: 45px;
-  border-radius: 50%;
-  border: 2px solid white;
+header .header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
 }

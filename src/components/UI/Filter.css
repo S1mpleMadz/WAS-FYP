@@ -1,28 +1,31 @@
 .filter-section {
-  margin-bottom: 15px;
+  margin-bottom: 16px;
 }
 
 .filter-section .title {
-  color: #2b97e4;
+  color: var(--col-accent);
   margin-bottom: 8px;
-  font-size: 1em;
+  font-size: 0.72rem;
   font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
 }
 
 .filter-section .checkbox-label {
   display: flex;
   align-items: center;
-  color: white;
-  margin-bottom: 5px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
   cursor: pointer;
-  font-size: 0.9em;
+  font-size: 0.88rem;
+  transition: color 0.15s ease;
 }
 
 .filter-section .checkbox-label input[type="checkbox"] {
   flex-shrink: 0;
-  margin-right: 6px;
+  margin-right: 8px;
   cursor: pointer;
-  accent-color: #2b97e4;
+  accent-color: var(--col-accent);
 }
 
 .filter-section .checkbox-label span {
@@ -30,5 +33,5 @@
 }
 
 .filter-section .checkbox-label:hover {
-  opacity: 0.8;
+  color: white;
 }

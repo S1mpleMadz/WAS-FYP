@@ -5,33 +5,28 @@
 .clear-filters .clear-button {
   width: 100%;
   padding: 0.5rem 1rem;
-  background-color: white;
-  border: 1px solid lightgray;
-  border-radius: 4px;
-  color: gray;
-  font-size: 0.9rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
   cursor: pointer;
   transition: all 0.2s ease;
-}
-
-.clear-filters .clear-button:hover:not(:disabled) {
-  background-color: white;
-  border-color: lightgray;
-  color: black;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.45);
 }
 
 .clear-filters .clear-button:disabled {
-  opacity: 0.5;
+  opacity: 0.3;
   cursor: not-allowed;
 }
 
 .clear-filters .clear-button:not(:disabled) {
-  background-color: #2b97e4;
-  border-color: #2b97e4;
-  color: black;
+  background-color: var(--col-accent);
+  border-color: var(--col-accent);
+  color: white;
 }
 
 .clear-filters .clear-button:not(:disabled):hover {
-  background-color: #87c3f0;
-  border-color: white;
+  background-color: #2563eb;
+  border-color: #2563eb;
 }

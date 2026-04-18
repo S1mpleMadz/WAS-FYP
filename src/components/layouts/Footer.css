@@ -1,12 +1,13 @@
 footer {
-  height: 50px;
-  padding: 0 5px;
-  background: #2b97e4;
+  padding: 14px 24px;
+  background-color: var(--col-dark);
   display: flex;
   align-items: center;
   justify-content: center;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
 }
 
-footer p.thankyou {
-  color: white;
+footer p {
+  color: rgba(255, 255, 255, 0.45);
+  font-size: 0.8rem;
 }
