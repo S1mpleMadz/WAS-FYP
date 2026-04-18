@@ -8,9 +8,7 @@ API.put = (endpoint, data) => callFetch(endpoint, "PUT", data);
 API.delete = (endpoint) => callFetch(endpoint, "DELETE", null);
 
 const callFetch = async (endpoint, method, dataObj) => {
-  // build request object
-
-  let requestObj = { method: method }; // GET, POST, PUT or DELETE
+  let requestObj = { method };
 
   if (dataObj)
     requestObj = {
@@ -19,21 +17,19 @@ const callFetch = async (endpoint, method, dataObj) => {
       body: JSON.stringify(dataObj),
     };
 
-  // call the fetch and process the return
-
   try {
-    const endpointAddress = API_URL + endpoint;
-    const response = await fetch(endpointAddress, requestObj);
-    const result = await response.json();
+    const response = await fetch(API_URL + endpoint, requestObj);
+    const text = await response.text();
+    const result = text ? JSON.parse(text) : null;
 
     return response.status >= 200 && response.status < 300
-      ? { isSuccess: true, result: result }
+      ? { isSuccess: true, result }
       : {
           isSuccess: false,
-          message: `Error recovering records: status code ${response.status}`,
+          message: result?.message || `Error: status code ${response.status}`,
         };
   } catch (error) {
-    return { isSuccess: false, response: error.message };
+    return { isSuccess: false, message: error.message };
   }
 };
 

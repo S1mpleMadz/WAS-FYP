@@ -45,8 +45,7 @@ export function UserForm({ initialUser, onCancel, onSubmit }) {
 
   const validation = {
     isValid: {
-      // Added UserTitle to prevent the crash
-      UserTitle: (value) => true, // Or add strict validation if required: value !== null && value !== ""
+      UserTitle: () => true,
       UserFirstname: (value) => value && value.trim().length > 0,
       UserLastname: (value) => value && value.trim().length > 0,
       UserEmail: (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value),
@@ -59,11 +58,10 @@ export function UserForm({ initialUser, onCancel, onSubmit }) {
       PositionID: (value) => value !== null && value > 0,
       DepartmentID: (value) => value !== null && value > 0,
       WorkStatusID: (value) => value !== null && value > 0,
-      // Fallback for hidden ID so the hook doesn't crash on edits
       UserID: () => true,
     },
     errorMessage: {
-      UserTitle: "Please select a valid title", // Added error message
+      UserTitle: "Please select a valid title",
       UserFirstname: "First name is required",
       UserLastname: "Last name is required",
       UserEmail: "Please enter a valid email address",

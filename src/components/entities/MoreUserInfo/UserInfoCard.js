@@ -97,8 +97,6 @@ export default function SpecificUserInformation() {
   }
 
   const userData = user[0];
-  const editUserText = "Edit User";
-  const deleteUserText = "Delete User";
 
   return (
     <>
@@ -142,23 +140,31 @@ export default function SpecificUserInformation() {
           </p>
           <p>
             <strong>Type:</strong>
-            {userData.UserUsertypeName}
+            {userData.UserTypeName}
           </p>
           <p>
             <strong>Position:</strong>
-            {userData.UserPositionName}
+            {userData.PositionName}
+          </p>
+          <p>
+            <strong>Department:</strong>
+            {userData.DepartmentName}
+          </p>
+          <p>
+            <strong>Work Type:</strong>
+            {userData.WorkTypeName}
           </p>
         </div>
       </div>
       <Actions.Tray>
         <Actions.Modify
           showText
-          buttonText={editUserText}
-          onClick={() => openForm(editUserText)}
+          buttonText="Edit User"
+          onClick={() => openForm("Edit User")}
         />
         <Actions.Delete
           showText
-          buttonText={deleteUserText}
+          buttonText="Delete User"
           onClick={openDeleteModal}
         />
       </Actions.Tray>
