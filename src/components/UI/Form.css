@@ -1,0 +1,68 @@
+div.Form {
+  border: 1px solid #a3a3a3;
+  border-radius: 8px;
+  padding: 24px;
+  margin-bottom: 20px;
+  background-color: white;
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+div.Form div.FormTray {
+  width: 100%;
+}
+
+div.Form div.FormTray div.FormItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+div.Form div.FormTray div.FormItem div.FormLabel {
+  font-weight: 600;
+  font-size: 14px;
+  color: #333;
+}
+
+div.Form div.FormTray div.FormItem label,
+div.Form div.FormTray div.FormItem input,
+div.Form div.FormTray div.FormItem select {
+  width: 100%;
+  font-size: 16px;
+}
+
+div.Form div.FormTray div.FormItem select,
+div.Form div.FormTray div.FormItem input {
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid #a3a3a3;
+  background: white;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+div.Form div.FormTray div.FormItem select:hover,
+div.Form div.FormTray div.FormItem input:hover {
+  border-color: #16c4ab;
+}
+
+div.Form div.FormTray div.FormItem select:focus,
+div.Form div.FormTray div.FormItem input:focus {
+  border-color: #16c4ab;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(41, 231, 205, 0.3);
+}
+
+div.Form div.FormTray div.FormItem p.FormAdvice {
+  color: #16c4ab;
+  font-size: 90%;
+}
+
+div.Form div.FormTray div.FormItem p.FormError {
+  color: #d16277;
+  font-weight: 500;
+  font-size: 90%;
+}

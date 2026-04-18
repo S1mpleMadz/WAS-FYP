@@ -1,14 +1,13 @@
+import ModuleCrudler from "../entities/module/ModuleCrudler.js";
+
 function Modules() {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welome to Modules</h1>;
+  const myModulesEndpoint = `/modules/`;
+  return (
+    <>
+      <h1>Modules</h1>
+      <ModuleCrudler endpoint={myModulesEndpoint} />
+    </>
+  );
 }
 
 export default Modules;

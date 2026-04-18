@@ -1,0 +1,18 @@
+div.notificationAlert header {
+  background-color: dodgerblue !important;
+}
+
+div.notificationConfirm header {
+  background-color: orange !important;
+}
+
+div.notificationError header {
+  background-color: red !important;
+}
+
+div.notificationAlert main p,
+div.notificationConfirm main p,
+div.notificationError main p {
+  min-width: 200px;
+  text-align: center;
+}

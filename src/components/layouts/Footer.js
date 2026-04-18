@@ -1,19 +1,9 @@
 import "./Footer.css";
 
-function Footer(props) {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
+function Footer() {
   return (
     <footer>
-      <h1>Footer Component</h1>
-      <p>This is the footer section of the layout.</p>
+      <p className="thankyou">&copy;2025 WAS | Thank you for using this system!</p>
     </footer>
   );
 }

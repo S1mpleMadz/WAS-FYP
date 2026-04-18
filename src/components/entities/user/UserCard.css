@@ -1,0 +1,43 @@
+div.userCard {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+}
+
+div.userCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+div.userCard:hover .user-details .user-name {
+  color: white !important;
+}
+
+div.userCard .user-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+div.userCard .user-details .user-name {
+  flex: 1;
+  font-weight: bold;
+  color: black;
+  text-align: left;
+}
+
+div.userCard .user-details .info {
+  color: darkgray;
+  white-space: nowrap;
+}
+
+div.userCard .user-details .info:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background-color: #dee2e6;
+  margin-right: 12px;
+  vertical-align: middle;
+}

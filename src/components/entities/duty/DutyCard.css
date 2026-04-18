@@ -1,0 +1,44 @@
+div.dutyCard {
+  width: 100%;
+  height: auto;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+div.dutyCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+div.dutyCard:hover .duty-details .duty-name {
+  color: white !important;
+}
+
+div.dutyCard .duty-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+div.dutyCard .duty-details .duty-name {
+  flex: 1;
+  font-weight: bold;
+  color: black;
+  text-align: left;
+}
+
+div.dutyCard .duty-details .info {
+  color: darkgray;
+  white-space: nowrap;
+}
+
+div.dutyCard .duty-details .info:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background-color: #dee2e6;
+  margin-right: 12px;
+  vertical-align: middle;
+}

@@ -1,0 +1,138 @@
+.profile-page .welcome {
+  font-size: 1.5rem;
+  margin: 0rem 0 1rem 0.2rem;
+}
+
+.profile-page .profile-container {
+  display: flex;
+  gap: 2rem;
+}
+
+.profile-page .user-details {
+  flex: 1;
+  max-width: 400px;
+  color: white;
+  background-color: #190b28;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.profile-page .user-details img {
+  width: 200px;
+  height: auto;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+  border: 5px solid white;
+}
+
+.profile-page .user-details h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.profile-page .user-details .details {
+  text-align: left;
+}
+
+.profile-page .user-details .details p {
+  margin: 0.8rem 0;
+}
+
+.profile-page .profile-data {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  flex: 1;
+  align-items: stretch;
+}
+
+.profile-page .profile-data > div {
+  flex: 1 1 0;
+  background: white;
+  padding: 1rem;
+  border-radius: 8px;
+}
+
+.profile-page .profile-data .summary-box p {
+  margin: 0.5rem 0;
+  padding: 0.2rem 1rem;
+}
+
+.profile-page .profile-data .summary-box .total-hours {
+  background-color: #2b97e4;
+  box-shadow: 3px 3px rgba(0, 0, 0, 0.259);
+  color: white;
+  padding: 1rem;
+  font-weight: bold;
+  border-radius: 5px;
+}
+
+.profile-page .tasks-section {
+  margin-top: 1rem;
+  background-color: #190b28;
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.profile-page .tasks-section h3 {
+  margin-bottom: 1rem;
+  color: white;
+}
+
+.profile-page .tasks-section .task-item {
+  background-color: white;
+  padding: 16px;
+  margin-bottom: 0.5rem;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-page .duty-details {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-page .duty-details span {
+  font-size: 0.9em;
+  color: #2b97e4;
+}
+
+.profile-page .duties-total {
+  margin-top: 20px;
+  padding: 15px;
+  background-color: #c4edfa;
+  border-radius: 6px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.profile-page .duties-total .total-details {
+  display: flex;
+  gap: 15px;
+}
+
+.profile-page .duties-total .total-details span {
+  font-size: 0.9em;
+  color: #1e3c72;
+}
+
+.profile-page .duties-total .total-details span strong {
+  font-weight: 900;
+}
+
+@media (max-width: 768px) {
+  .profile-page .profile-container {
+    flex-direction: column;
+  }
+  .profile-page .user-details,
+  .profile-page .profile-data {
+    flex-direction: column;
+    max-width: 100%;
+  }
+}

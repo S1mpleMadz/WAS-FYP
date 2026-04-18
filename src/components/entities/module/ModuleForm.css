@@ -1,0 +1,44 @@
+div.moduleForm {
+  background-color: #190b28;
+  color: white;
+  border: 1px solid lightgray;
+  border-radius: 10px;
+  padding: 20px 20px;
+  margin: 0 0 20px 0;
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+}
+
+div.moduleForm div.FormTray {
+  width: 100%;
+}
+
+div.moduleForm div.FormTray label,
+div.moduleForm div.FormTray input,
+div.moduleForm div.FormTray select {
+  display: block;
+  width: 100%;
+}
+
+div.moduleForm div.FormTray select,
+div.moduleForm div.FormTray input {
+  width: 100%;
+  padding: 3px;
+  margin: 1px 0;
+  font-size: 100%;
+  border-radius: 5px;
+  border: 1px solid #a3a3a3;
+  background: white;
+}
+
+div.moduleForm div.FormTray select:focus,
+div.moduleForm div.FormTray input:focus {
+  border-color: #16c4ab;
+  outline-color: #16c4ab;
+}
+
+div.moduleForm button.Action {
+  background-color: white !important;
+  color: black;
+}

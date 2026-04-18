@@ -1,44 +1,28 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../auth/AuthContext.js";
 import "./Navbar.css";
 
-function Navbar(props) {
-  // Properties
+function Navbar() {
+  const { loggedInUser } = useAuth();
 
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  const getLinkStyle = ({ isActive }) => (isActive ? "navSelected" : null);
-  // View
   return (
     <nav>
-      <div className="nav-item">
-        <NavLink to="/" className={getLinkStyle}>
-          Home
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/duties" className={getLinkStyle}>
-          Duties
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/modules" className={getLinkStyle}>
-          Modules
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/staff" className={getLinkStyle}>
-          Staff
-        </NavLink>
-      </div>
-      <div className="nav-item">
-        <NavLink to="/research" className={getLinkStyle}>
-          Research
-        </NavLink>
-      </div>
+      {loggedInUser && (
+        <>
+          <div className="navItem">
+            <NavLink to="/home">Home</NavLink>
+          </div>
+          <div className="navItem">
+            <NavLink to="/modules">Modules</NavLink>
+          </div>
+          <div className="navItem">
+            <NavLink to="/staff">Staff</NavLink>
+          </div>
+          <div className="navItem">
+            <NavLink to="/duties">Duty</NavLink>
+          </div>
+        </>
+      )}
     </nav>
   );
 }

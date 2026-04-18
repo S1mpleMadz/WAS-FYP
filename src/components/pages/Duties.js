@@ -1,14 +1,11 @@
-function Duties() {
-  // Properties
+import DutiesCruddler from "../entities/duty/DutyCruddler.js";
 
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welome to duties</h1>;
+export default function Duties() {
+  const endpoint = "/duties";
+  return (
+    <>
+      <h1>Duties</h1>
+      <DutiesCruddler endpoint={endpoint} />
+    </>
+  );
 }
-
-export default Duties;

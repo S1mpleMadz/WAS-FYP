@@ -1,0 +1,44 @@
+div.moduleCard {
+  width: 100%;
+  height: auto !important;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+div.moduleCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+div.moduleCard:hover .module-details .module-name {
+  color: white !important;
+}
+
+div.moduleCard .module-details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+}
+
+div.moduleCard .module-details .module-name {
+  flex: 1;
+  font-weight: bold;
+  color: black;
+  text-align: left;
+}
+
+div.moduleCard .module-details .info {
+  color: darkgray;
+  white-space: nowrap;
+}
+
+div.moduleCard .module-details .info:before {
+  content: "";
+  display: inline-block;
+  width: 1px;
+  height: 12px;
+  background-color: #dee2e6;
+  margin-right: 12px;
+  vertical-align: middle;
+}

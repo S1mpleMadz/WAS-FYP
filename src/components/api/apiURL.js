@@ -1,3 +1,2 @@
-export const API_URL = "https://madzs1mple.uk/api";
-
+const API_URL = "https://softwarehub.uk/unibase/was/api";
 export default API_URL;

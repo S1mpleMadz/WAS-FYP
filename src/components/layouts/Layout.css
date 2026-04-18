@@ -1,0 +1,20 @@
+@import url("https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap");
+
+* {
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Quicksand", sans-serif;
+}
+
+div.layout {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr auto;
+}
+
+div.layout main {
+  padding: 20px;
+  background: linear-gradient(to top, #2b97e4, #c4edfa, #c4edfa, white);
+}

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import API from "./API";
+import API from "./API.js";
 
 const useLoad = (endpoint) => {
   const [records, setRecords] = useState([]);
@@ -21,6 +21,7 @@ const useLoad = (endpoint) => {
 
   useEffect(() => {
     loadRecords();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [endpoint]);
 
   return [records, isLoading, loadingMessage, loadRecords];
