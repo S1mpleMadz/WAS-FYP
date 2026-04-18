@@ -1,0 +1,37 @@
+.clear-filters {
+  margin-top: 1rem;
+}
+
+.clear-filters .clear-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  background-color: white;
+  border: 1px solid lightgray;
+  border-radius: 4px;
+  color: gray;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.clear-filters .clear-button:hover:not(:disabled) {
+  background-color: white;
+  border-color: lightgray;
+  color: black;
+}
+
+.clear-filters .clear-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.clear-filters .clear-button:not(:disabled) {
+  background-color: #2b97e4;
+  border-color: #2b97e4;
+  color: black;
+}
+
+.clear-filters .clear-button:not(:disabled):hover {
+  background-color: #87c3f0;
+  border-color: white;
+}

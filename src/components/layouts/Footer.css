@@ -1,0 +1,12 @@
+footer {
+  height: 50px;
+  padding: 0 5px;
+  background: #2b97e4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer p.thankyou {
+  color: white;
+}

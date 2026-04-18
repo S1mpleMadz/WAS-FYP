@@ -9,7 +9,7 @@ import PageNotFound from "./components/pages/404.js";
 import SignIn from "./components/pages/SignIn.js";
 import Staff from "./components/pages/Staff.js";
 import Research from "./components/pages/Research.js";
-import SpecificUserInformation from "./components/entities/staff/StaffInfo.js";
+import SpecificUserInformation from "./components/entities/MoreUserInfo/UserInfoCard.js";
 import "./App.css";
 
 function App() {

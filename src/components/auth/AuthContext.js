@@ -1,38 +1,30 @@
-import React, { createContext, useState } from 'react';
+import { useState, createContext, useContext } from "react";
 
-const AuthContext = createContext();
+const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        // Retrieve user from localStorage if available
-        const storedUser = localStorage.getItem('user');
-        return storedUser ? JSON.parse(storedUser) : null;
-    });
+  const [loggedInUser, setLoggedInUser] = useState(() => {
+    const storedUser = localStorage.getItem("loggedInUser");
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-    const login = (username) => {
-        const newUser = { name: username }; // Dummy user object
-        setUser(newUser);
-        // Store user in localStorage
-        localStorage.setItem('user', JSON.stringify(newUser));
-    };
+  const login = (user) => {
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    setLoggedInUser(user);
+  };
 
-    const logout = () => {
-        setUser(null);
-        // Remove user from localStorage
-        localStorage.removeItem('user');
-    };
+  const logout = () => {
+    localStorage.removeItem("loggedInUser");
+    setLoggedInUser(null);
+  };
 
-    return (
-        <AuthContext.Provider value={{ user, login, logout }}>
-            {children}
-        </AuthContext.Provider>
-    );
+  return (
+    <AuthContext.Provider value={{ loggedInUser, login, logout }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
-export const useAuth = () => {
-    const context = React.useContext(AuthContext);
-    if (context === undefined) {
-        throw new Error('useAuth must be used within an AuthProvider');
-    }
-    return context;
-};
+export const useAuth = () => useContext(AuthContext);
+
+export default AuthProvider;

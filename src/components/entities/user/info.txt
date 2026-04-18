@@ -1,0 +1,6 @@
+Graeme Sprint 1 (2nd video he has this folder)
+
+   regex  :  // look at regular expresions for things like module code when we get around to doing modules
+   same for email and stuff for staff
+
+// spread operator

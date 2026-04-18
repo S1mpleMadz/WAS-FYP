@@ -1,0 +1,34 @@
+.filter-section {
+  margin-bottom: 15px;
+}
+
+.filter-section .title {
+  color: #2b97e4;
+  margin-bottom: 8px;
+  font-size: 1em;
+  font-weight: 700;
+}
+
+.filter-section .checkbox-label {
+  display: flex;
+  align-items: center;
+  color: white;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 0.9em;
+}
+
+.filter-section .checkbox-label input[type="checkbox"] {
+  flex-shrink: 0;
+  margin-right: 6px;
+  cursor: pointer;
+  accent-color: #2b97e4;
+}
+
+.filter-section .checkbox-label span {
+  flex: 1;
+}
+
+.filter-section .checkbox-label:hover {
+  opacity: 0.8;
+}

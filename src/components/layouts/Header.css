@@ -1,0 +1,54 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 18px;
+  background: #2b97e4;
+}
+
+header .headerText {
+  display: flex;
+  flex-direction: column;
+}
+
+header .headerText h1 {
+  color: white;
+  margin: 0;
+  font-size: 30px;
+}
+
+header .headerActions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+header .headerActions .welcome {
+  color: white;
+  margin: 0;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+header .headerActions button {
+  padding: 6px 12px;
+  background-color: white;
+  border: 2px solid transparent;
+  border-radius: 4px;
+  color: #2b97e4;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+header .headerActions button:hover {
+  background-color: #f2f2f2;
+}
+
+header .headerActions .logo {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  border: 2px solid white;
+}
