@@ -14,7 +14,7 @@ export default function SpecificUserInformation() {
   const navigate = useNavigate();
 
   const teachingEndpoint = `/teaching/user/${userId}`;
-  const teachingDutyEndpoint = `/myduties/users/${userId}`;
+  const teachingDutyEndpoint = `/userduties/user/${userId}`;
 
   const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
     `/Users/${userId}`,
@@ -67,7 +67,18 @@ export default function SpecificUserInformation() {
     },
   ];
 
-  const teachingDutyColumns = [{ header: "Duty Name", key: "MydutyDutyName" }];
+  const teachingDutyColumns = [
+    {
+      header: "Duty Name",
+      key: "DutyName",
+    },
+    {
+      header: "Effort (hrs)",
+      key: "DutyEffort",
+      className: "center",
+      render: (row) => `${parseFloat(row.DutyEffort)} hrs`,
+    },
+  ];
 
   const handleModify = async (updatedUser) => {
     const result = await API.put(`/Users/${updatedUser.UserID}`, updatedUser);

@@ -66,3 +66,8 @@
   min-width: 88px;
   flex-shrink: 0;
 }
+
+.dutyAssignedInfo {
+  max-width: 900px;
+  margin: 0 auto;
+}
