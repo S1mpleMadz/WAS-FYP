@@ -1,14 +1,7 @@
+import LoginForm from "../entities/login/LoginForm.js";
+
 function Login() {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welome to Login</h1>;
+  return <LoginForm />;
 }
 
 export default Login;
