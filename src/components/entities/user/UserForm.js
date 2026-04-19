@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "./UserForm.css";
 import useLoad from "../../api/useLoad.js";
 import { useModal } from "../../UI/Modal.js";
@@ -9,8 +10,7 @@ const defaultUser = {
   UserFirstname: "",
   UserLastname: "",
   UserEmail: "",
-  UserImageURL:
-    "https://www.kingston.ac.uk/sites/default/files/styles/1_1_media_sm/public/migrated-images/kingston-university-3e2ab5c0aa6-draishihab.jpg?h=0eda5579&itok=D1_psqrI",
+  UserImageURL: "",
   UserTypeID: 0,
   PositionID: 0,
   DepartmentID: 0,
@@ -74,26 +74,38 @@ export function UserForm({ initialUser, onCancel, onSubmit }) {
     },
   };
 
+  const isCreating = !initialUser || !initialUser.UserID;
   if (!initialUser) initialUser = defaultUser;
 
-  let confirmText = "Are you sure you want to create this user? ";
-  if (initialUser !== defaultUser)
-    confirmText = "Are you sure you want to make this change?";
+  let confirmText = isCreating
+    ? "Are you sure you want to create this user?"
+    : "Are you sure you want to make this change?";
 
   const [userTypes, , loadingUserTypesMessage] = useLoad(`/usertypes`);
   const [positions, , loadingPositionsMessage] = useLoad(`/positions`);
   const [departments, , loadingDepartmentsMessage] = useLoad(`/departments`);
   const [workStatuses, , loadingWorkStatusesMessage] = useLoad(`/workstatus`);
 
+  const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState(null);
+
   const [showConfirm, confirm, openConfirm, closeConfirm] = useModal(false);
   const [user, errors, handleChange, handleSubmit] = Form.useForm(
     initialUser,
     conformance,
     validation,
-    onSubmit,
+    (userData) => onSubmit(userData, password),
   );
 
-  const confirmSubmit = () => openConfirm(confirmText);
+  const confirmSubmit = () => {
+    if (isCreating && password.trim().length < 8) {
+      setPasswordError("Password must be at least 8 characters");
+      return;
+    }
+    setPasswordError(null);
+    openConfirm(confirmText);
+  };
+
   const titles = ["Mr", "Mrs", "Miss", "Ms", "Dr", "Prof"];
 
   return (
@@ -246,6 +258,20 @@ export function UserForm({ initialUser, onCancel, onSubmit }) {
             onChange={handleChange}
           />
         </Form.Item>
+
+        {isCreating && (
+          <Form.Item label="Password" error={passwordError}>
+            <input
+              type="password"
+              placeholder="Set a login password (min. 8 characters)"
+              value={password}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setPasswordError(null);
+              }}
+            />
+          </Form.Item>
+        )}
       </Form>
     </>
   );

@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
 import { useModal } from "../../UI/Modal.js";
 import useLoad from "../../api/useLoad.js";
 import API from "../../api/API.js";
@@ -17,6 +18,7 @@ export default function SpecificUserInformation() {
 
   const [showForm, formTitle, openForm, closeForm] = useModal(false);
   const [showDeleteModal, , openDeleteModal, closeDeleteModal] = useModal(false);
+  const [showResetPassword, , openResetPassword, closeResetPassword] = useModal(false);
   const [showAlert, alertMessage, openAlert, closeAlert] = useModal(false);
   const [showError, errorMessage, openError, closeError] = useModal(false);
 
@@ -26,6 +28,17 @@ export default function SpecificUserInformation() {
       closeForm();
       openAlert("User successfully updated");
       await loadRecord();
+    } else {
+      openError(result.message);
+    }
+  };
+
+  const handleResetPassword = async (newPassword) => {
+    const hash = await bcrypt.hash(newPassword, 10);
+    const result = await API.put(`/usercredentials/${userId}`, { UserID: parseInt(userId, 10), PasswordHash: hash });
+    closeResetPassword();
+    if (result.isSuccess) {
+      openAlert("Password successfully reset");
     } else {
       openError(result.message);
     }
@@ -62,6 +75,9 @@ export default function SpecificUserInformation() {
         showDeleteModal={showDeleteModal}
         openDeleteModal={openDeleteModal}
         closeDeleteModal={closeDeleteModal}
+        showResetPassword={showResetPassword}
+        openResetPassword={openResetPassword}
+        closeResetPassword={closeResetPassword}
         showAlert={showAlert}
         alertMessage={alertMessage}
         closeAlert={closeAlert}
@@ -69,6 +85,7 @@ export default function SpecificUserInformation() {
         errorMessage={errorMessage}
         closeError={closeError}
         onModify={handleModify}
+        onResetPassword={handleResetPassword}
         onDelete={handleDelete}
       />
       <UserDataTables

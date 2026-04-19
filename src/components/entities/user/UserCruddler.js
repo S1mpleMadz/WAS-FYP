@@ -2,6 +2,7 @@ import Actions from "../../UI/Actions.js";
 import { Alert, Error } from "../../UI/Notifications.js";
 import { CardContainer } from "../../UI/Card.js";
 import { useState } from "react";
+import bcrypt from "bcryptjs";
 import UserCard from "./UserCard.js";
 import UserForm from "./UserForm.js";
 import Search from "../../UI/Search.js";
@@ -26,15 +27,28 @@ export default function UserCruddler({ endpoint }) {
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 12;
 
-  const handleSubmit = async (user) => {
+  const handleSubmit = async (user, password) => {
     const result = await API.post(endpoint, user);
-    if (result.isSuccess) {
-      closeForm();
-      openAlert("User successfully added");
-      await loadUsers();
-    } else {
+    if (!result.isSuccess) {
       openError(result.message);
+      return;
     }
+
+    const newUserID = result.result?.[0]?.UserID;
+    if (newUserID && password) {
+      const hash = await bcrypt.hash(password, 10);
+      const credResult = await API.post("/usercredentials", { UserID: newUserID, PasswordHash: hash });
+      if (!credResult.isSuccess) {
+        openError(`User created but credentials failed: ${credResult.message}`);
+        await loadUsers();
+        closeForm();
+        return;
+      }
+    }
+
+    closeForm();
+    openAlert("User successfully added");
+    await loadUsers();
   };
 
   const handleClearFilters = () => {

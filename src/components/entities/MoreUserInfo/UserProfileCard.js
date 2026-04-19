@@ -3,6 +3,7 @@ import { Modal } from "../../UI/Modal.js";
 import { Alert, Error } from "../../UI/Notifications.js";
 import DeleteConfirmation from "../../UI/DeleteConfirmation.js";
 import UserForm from "../user/UserForm.js";
+import ResetPasswordForm from "./ResetPasswordForm.js";
 
 export default function UserProfileCard({
   userData,
@@ -13,6 +14,9 @@ export default function UserProfileCard({
   showDeleteModal,
   openDeleteModal,
   closeDeleteModal,
+  showResetPassword,
+  openResetPassword,
+  closeResetPassword,
   showAlert,
   alertMessage,
   closeAlert,
@@ -20,6 +24,7 @@ export default function UserProfileCard({
   errorMessage,
   closeError,
   onModify,
+  onResetPassword,
   onDelete,
 }) {
   return (
@@ -30,6 +35,10 @@ export default function UserProfileCard({
           onCancel={closeForm}
           onSubmit={onModify}
         />
+      </Modal>
+
+      <Modal show={showResetPassword} title="Reset Password">
+        <ResetPasswordForm onCancel={closeResetPassword} onSubmit={onResetPassword} />
       </Modal>
 
       <Alert show={showAlert} message={alertMessage} onDismiss={closeAlert} />
@@ -62,6 +71,11 @@ export default function UserProfileCard({
           showText
           buttonText="Edit User"
           onClick={() => openForm("Edit User")}
+        />
+        <Actions.Modify
+          showText
+          buttonText="Reset Password"
+          onClick={openResetPassword}
         />
         <Actions.Delete
           showText
