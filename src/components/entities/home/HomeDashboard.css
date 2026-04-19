@@ -1,0 +1,235 @@
+.homeDashboard {
+  padding: 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.homeDashboard h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--col-text);
+  margin: 0;
+}
+
+.homeDashboard h1 span {
+  color: var(--col-accent);
+}
+
+/* ── Layout ─────────────────────────────── */
+
+.homeGrid {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+.homeRight {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* ── Shared card shell ───────────────────── */
+
+.homeCard {
+  background: var(--col-surface);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.homeCard h3 {
+  font-size: 0.78rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--col-text-muted);
+  margin: 0;
+  padding-bottom: 12px;
+  border-bottom: 1px solid var(--col-border);
+}
+
+/* ── Profile card ───────────────────────── */
+
+.homeProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  text-align: center;
+}
+
+.homeAvatar {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid var(--col-border);
+}
+
+.homeAvatarFallback {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+  background: var(--col-accent);
+  color: #fff;
+  font-size: 2rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.homeProfileName {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--col-text);
+  margin: 0;
+}
+
+.homeProfileTitle {
+  font-size: 0.85rem;
+  color: var(--col-text-muted);
+  margin: 0;
+}
+
+.homeProfileDetails {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+}
+
+.homeProfileRow {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.homeProfileRow span:first-child {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--col-text-muted);
+  font-weight: 600;
+}
+
+.homeProfileRow span:last-child {
+  font-size: 0.9rem;
+  color: var(--col-text);
+}
+
+/* ── Workload card ──────────────────────── */
+
+.workloadRows {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.workloadRow {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.workloadRowLabel {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--col-text);
+}
+
+.workloadRowLabel span:last-child {
+  font-weight: 600;
+  color: var(--col-accent);
+}
+
+.workloadBar {
+  height: 6px;
+  border-radius: 99px;
+  background: var(--col-border);
+  overflow: hidden;
+}
+
+.workloadBarFill {
+  height: 100%;
+  border-radius: 99px;
+  background: var(--col-accent);
+  transition: width 0.4s ease;
+}
+
+.workloadTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--col-border);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--col-text);
+}
+
+.workloadTotal span:last-child {
+  font-size: 1.1rem;
+  color: var(--col-accent);
+}
+
+/* ── Duties card ────────────────────────── */
+
+.dutiesList {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.dutyRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--col-bg);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+}
+
+.dutyName {
+  color: var(--col-text);
+  font-weight: 500;
+}
+
+.dutyEffort {
+  color: var(--col-accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.dutiesTotal {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 12px;
+  border-top: 1px solid var(--col-border);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--col-text);
+}
+
+.dutiesTotal span:last-child {
+  color: var(--col-accent);
+  font-size: 1.05rem;
+}
+
+.homeEmpty {
+  font-size: 0.88rem;
+  color: var(--col-text-muted);
+  font-style: italic;
+}

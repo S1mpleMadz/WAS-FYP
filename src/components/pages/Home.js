@@ -1,14 +1,7 @@
+import HomeDashboard from "../entities/home/HomeDashboard.js";
+
 function Home() {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welcome to the Home Page</h1>;
+  return <HomeDashboard />;
 }
 
 export default Home;
