@@ -1,84 +1,24 @@
 import { useParams, useNavigate } from "react-router-dom";
-import Actions from "../../UI/Actions.js";
-import { useModal, Modal } from "../../UI/Modal.js";
-import { Alert, Error } from "../../UI/Notifications.js";
+import { useModal } from "../../UI/Modal.js";
 import useLoad from "../../api/useLoad.js";
 import API from "../../api/API.js";
-import DeleteConfirmation from "../../UI/DeleteConfirmation.js";
-import UserForm from "../user/UserForm.js";
 import "./UserInfoCard.css";
-import Table from "../../UI/Table.js";
+import UserProfileCard from "./UserProfileCard.js";
+import UserDataTables from "./UserDataTables.js";
 
 export default function SpecificUserInformation() {
   const { userId } = useParams();
   const navigate = useNavigate();
 
-  const teachingEndpoint = `/teaching/user/${userId}`;
-  const teachingDutyEndpoint = `/userduties/user/${userId}`;
+  const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(`/Users/${userId}`);
+  const [teaching, isTeachingLoading, teachingLoadingMessage] = useLoad(`/teaching/user/${userId}`);
+  const [teachingDuty, isDutyLoading, dutyLoadingMessage] = useLoad(`/userduties/user/${userId}`);
+  const [research, isResearchLoading, researchLoadingMessage] = useLoad(`/research/user/${userId}`);
 
-  const [user, isUserLoading, loadingMessage, loadRecord] = useLoad(
-    `/Users/${userId}`,
-  );
   const [showForm, formTitle, openForm, closeForm] = useModal(false);
-  const [showDeleteModal, , openDeleteModal, closeDeleteModal] =
-    useModal(false);
+  const [showDeleteModal, , openDeleteModal, closeDeleteModal] = useModal(false);
   const [showAlert, alertMessage, openAlert, closeAlert] = useModal(false);
   const [showError, errorMessage, openError, closeError] = useModal(false);
-
-  const [teaching, isTeachingLoading, teachingLoadingMessage] =
-    useLoad(teachingEndpoint);
-  const [teachingDuty, isDutyLoading, dutyLoadingMessage] = useLoad(teachingDutyEndpoint);
-
-  const teachingColumns = [
-    {
-      header: "Module",
-      key: "ModuleName",
-      render: (row) => `${row.ModuleCode} – ${row.ModuleName}`,
-    },
-    {
-      header: "Leading %",
-      key: "TeachingLeading",
-      className: "center",
-      render: (row) => `${parseFloat(row.TeachingLeading)}%`,
-    },
-    {
-      header: "Lecturing %",
-      key: "TeachingLecturing",
-      className: "center",
-      render: (row) => `${parseFloat(row.TeachingLecturing)}%`,
-    },
-    {
-      header: "Workshops %",
-      key: "TeachingWorkshops",
-      className: "center",
-      render: (row) => `${parseFloat(row.TeachingWorkshops)}%`,
-    },
-    {
-      header: "Assessing %",
-      key: "TeachingAssessing",
-      className: "center",
-      render: (row) => `${parseFloat(row.TeachingAssessing)}%`,
-    },
-    {
-      header: "Moderation",
-      key: "TeachingModeration",
-      className: "center",
-      render: (row) => (parseFloat(row.TeachingModeration) !== 0 ? "Yes" : "No"),
-    },
-  ];
-
-  const teachingDutyColumns = [
-    {
-      header: "Duty Name",
-      key: "DutyName",
-    },
-    {
-      header: "Effort (hrs)",
-      key: "DutyEffort",
-      className: "center",
-      render: (row) => `${parseFloat(row.DutyEffort)} hrs`,
-    },
-  ];
 
   const handleModify = async (updatedUser) => {
     const result = await API.put(`/Users/${updatedUser.UserID}`, updatedUser);
@@ -102,123 +42,46 @@ export default function SpecificUserInformation() {
   };
 
   if (isUserLoading) {
-    return (
-      <div className="userInfo">
-        <p>{loadingMessage}</p>
-      </div>
-    );
+    return <div className="userInfo"><p>{loadingMessage}</p></div>;
   }
 
   if (!user || user.length === 0) {
-    return (
-      <div className="userInfo">
-        <p>User not found.</p>
-      </div>
-    );
+    return <div className="userInfo"><p>User not found.</p></div>;
   }
 
   const userData = user[0];
 
   return (
     <>
-      <Modal show={showForm} title={formTitle}>
-        <UserForm
-          initialUser={userData}
-          onCancel={closeForm}
-          onSubmit={handleModify}
-        />
-      </Modal>
-
-      <Alert show={showAlert} message={alertMessage} onDismiss={closeAlert} />
-      <Error show={showError} message={errorMessage} onDismiss={closeError} />
-
-      <DeleteConfirmation
-        show={showDeleteModal}
-        itemType="user"
-        itemName={`${userData.UserFirstname} ${userData.UserLastname}`}
-        onConfirm={handleDelete}
-        onCancel={closeDeleteModal}
+      <UserProfileCard
+        userData={userData}
+        showForm={showForm}
+        formTitle={formTitle}
+        openForm={openForm}
+        closeForm={closeForm}
+        showDeleteModal={showDeleteModal}
+        openDeleteModal={openDeleteModal}
+        closeDeleteModal={closeDeleteModal}
+        showAlert={showAlert}
+        alertMessage={alertMessage}
+        closeAlert={closeAlert}
+        showError={showError}
+        errorMessage={errorMessage}
+        closeError={closeError}
+        onModify={handleModify}
+        onDelete={handleDelete}
       />
-
-      <div className="userInfo">
-        <img src={userData.UserImageURL} alt={userData.UserFirstname} />
-        <div className="userInfoDetails">
-          <p>
-            <strong>Title:</strong>
-            {userData.UserTitle}
-          </p>
-          <p>
-            <strong>First Name:</strong>
-            {userData.UserFirstname}
-          </p>
-          <p>
-            <strong>Last Name:</strong>
-            {userData.UserLastname}
-          </p>
-          <p>
-            <strong>Email:</strong>
-            {userData.UserEmail}
-          </p>
-          <p>
-            <strong>Type:</strong>
-            {userData.UserTypeName}
-          </p>
-          <p>
-            <strong>Position:</strong>
-            {userData.PositionName}
-          </p>
-          <p>
-            <strong>Department:</strong>
-            {userData.DepartmentName}
-          </p>
-          <p>
-            <strong>Work Type:</strong>
-            {userData.WorkTypeName}
-          </p>
-        </div>
-      </div>
-      <Actions.Tray>
-        <Actions.Modify
-          showText
-          buttonText="Edit User"
-          onClick={() => openForm("Edit User")}
-        />
-        <Actions.Delete
-          showText
-          buttonText="Delete User"
-          onClick={openDeleteModal}
-        />
-      </Actions.Tray>
-
-      <div className="teachingInfo">
-        <h3 className="table-title">Modules this Staff member teaches:</h3>
-
-        {isTeachingLoading ? (
-          <p>Loading teaching data: {teachingLoadingMessage}</p>
-        ) : (
-          <Table
-            columns={teachingColumns}
-            data={teaching}
-            emptyMessage="No teaching staff assigned to this module."
-          />
-        )}
-      </div>
-
-      <div className="teachingInfo">
-        <h3 className="table-title">
-          Duties that have been assigned to this Staff member
-        </h3>
-
-        {isDutyLoading ? (
-          <p>Loading duties: {dutyLoadingMessage}</p>
-        ) : (
-          <Table
-            columns={teachingDutyColumns}
-            data={teachingDuty}
-            emptyMessage="No duties have been assigned to this user."
-          />
-        )}
-      </div>
+      <UserDataTables
+        teaching={teaching}
+        isTeachingLoading={isTeachingLoading}
+        teachingLoadingMessage={teachingLoadingMessage}
+        teachingDuty={teachingDuty}
+        isDutyLoading={isDutyLoading}
+        dutyLoadingMessage={dutyLoadingMessage}
+        research={research}
+        isResearchLoading={isResearchLoading}
+        researchLoadingMessage={researchLoadingMessage}
+      />
     </>
   );
 }
