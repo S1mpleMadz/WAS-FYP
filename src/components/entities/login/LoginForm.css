@@ -1,0 +1,110 @@
+.loginPage {
+  min-height: 80vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--col-bg);
+}
+
+.loginCard {
+  background: var(--col-surface);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  padding: 48px 40px;
+  width: 100%;
+  max-width: 420px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.loginCard h2 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--col-text);
+  text-align: center;
+}
+
+.loginCard p.loginSubtitle {
+  font-size: 0.9rem;
+  color: var(--col-text-muted);
+  text-align: center;
+  margin-top: -16px;
+}
+
+.loginFields {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loginField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.loginField label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--col-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.loginField input {
+  padding: 10px 12px;
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-sm);
+  background: var(--col-surface);
+  color: var(--col-text);
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loginField input:hover {
+  border-color: var(--col-accent);
+}
+
+.loginField input:focus {
+  border-color: var(--col-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+.loginButton {
+  width: 100%;
+  padding: 12px;
+  background-color: var(--col-accent);
+  color: #ffffff;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.loginButton:hover {
+  background-color: #2563eb;
+  box-shadow: var(--shadow-sm);
+}
+
+.loginButton:active {
+  background-color: #1d4ed8;
+}
+
+.loginButton:disabled {
+  background-color: var(--col-text-muted);
+  cursor: not-allowed;
+}
+
+.loginError {
+  font-size: 0.85rem;
+  color: #ef4444;
+  text-align: center;
+  margin: 0;
+}

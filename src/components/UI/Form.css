@@ -1,0 +1,71 @@
+div.Form {
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  margin-bottom: 20px;
+  background-color: var(--col-surface);
+  max-height: 60vh;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+div.Form div.FormTray {
+  width: 100%;
+}
+
+div.Form div.FormTray div.FormItem {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+div.Form div.FormTray div.FormItem div.FormLabel {
+  font-weight: 600;
+  font-size: 0.78rem;
+  color: var(--col-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+div.Form div.FormTray div.FormItem label,
+div.Form div.FormTray div.FormItem input,
+div.Form div.FormTray div.FormItem select {
+  width: 100%;
+  font-size: 0.95rem;
+}
+
+div.Form div.FormTray div.FormItem select,
+div.Form div.FormTray div.FormItem input {
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--col-border);
+  background: var(--col-surface);
+  color: var(--col-text);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+div.Form div.FormTray div.FormItem select:hover,
+div.Form div.FormTray div.FormItem input:hover {
+  border-color: var(--col-accent);
+}
+
+div.Form div.FormTray div.FormItem select:focus,
+div.Form div.FormTray div.FormItem input:focus {
+  border-color: var(--col-accent);
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+}
+
+div.Form div.FormTray div.FormItem p.FormAdvice {
+  color: var(--col-text-muted);
+  font-size: 0.8rem;
+}
+
+div.Form div.FormTray div.FormItem p.FormError {
+  color: var(--col-error);
+  font-weight: 500;
+  font-size: 0.8rem;
+}

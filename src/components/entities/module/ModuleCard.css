@@ -1,0 +1,29 @@
+.moduleCard {
+  cursor: pointer;
+}
+
+.module-details {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 160px;
+}
+
+.module-code {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--col-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.module-name {
+  font-weight: 700;
+  color: var(--col-text);
+  font-size: 0.95rem;
+}
+
+.module-info {
+  font-size: 0.8rem;
+  color: var(--col-text-muted);
+}

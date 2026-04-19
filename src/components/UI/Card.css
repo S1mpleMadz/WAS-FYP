@@ -1,0 +1,31 @@
+div.cardContainer {
+  background-color: var(--col-bg);
+  border-radius: var(--radius-md);
+  padding: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: 12px;
+}
+
+div.cardContainer div.card {
+  background-color: var(--col-surface);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-md);
+  padding: 0.9rem 1.5rem;
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow-sm);
+}
+
+div.cardContainer div.card img {
+  width: 100%;
+  display: block;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+}
+
+div.cardContainer div.card:hover {
+  border-color: var(--col-accent);
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}

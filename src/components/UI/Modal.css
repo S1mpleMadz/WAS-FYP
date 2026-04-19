@@ -1,0 +1,45 @@
+div.ModalOverlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: fadeIn 0.2s ease-out;
+}
+
+div.ModalOverlay div.ModalPane {
+  background-color: var(--col-surface);
+  border-radius: var(--radius-lg);
+  width: 90%;
+  max-width: 600px;
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: slideUp 0.25s ease-out;
+}
+
+div.ModalOverlay div.ModalPane header {
+  background-color: var(--col-dark);
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 16px 24px;
+  justify-content: center;
+  letter-spacing: 0.02em;
+}
+
+div.ModalOverlay div.ModalPane main {
+  padding: 24px;
+  background-color: var(--col-bg);
+}
+
+@keyframes fadeIn {
+  from { background-color: rgba(0, 0, 0, 0); }
+  to   { background-color: rgba(0, 0, 0, 0.5); }
+}
+
+@keyframes slideUp {
+  from { transform: translateY(30px); opacity: 0; }
+  to   { transform: translateY(0);    opacity: 1; }
+}

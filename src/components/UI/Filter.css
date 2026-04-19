@@ -1,0 +1,37 @@
+.filter-section {
+  margin-bottom: 16px;
+}
+
+.filter-section .title {
+  color: var(--col-accent);
+  margin-bottom: 8px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.filter-section .checkbox-label {
+  display: flex;
+  align-items: center;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 6px;
+  cursor: pointer;
+  font-size: 0.88rem;
+  transition: color 0.15s ease;
+}
+
+.filter-section .checkbox-label input[type="checkbox"] {
+  flex-shrink: 0;
+  margin-right: 8px;
+  cursor: pointer;
+  accent-color: var(--col-accent);
+}
+
+.filter-section .checkbox-label span {
+  flex: 1;
+}
+
+.filter-section .checkbox-label:hover {
+  color: white;
+}

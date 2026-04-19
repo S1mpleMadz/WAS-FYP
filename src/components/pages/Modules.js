@@ -1,14 +1,15 @@
+import ModuleCruddler from "../entities/module/ModuleCruddler.js";
+
 function Modules() {
-  // Properties
-
-  // Hooks
-
-  // Context
-
-  // Methods
-
-  // View
-  return <h1>Welome to Modules</h1>;
+  return (
+    <section className="modules-page">
+      <div className="modules-header">
+        <h1>Modules</h1>
+      </div>
+      <hr className="divider" />
+      <ModuleCruddler endpoint="/modules" />
+    </section>
+  );
 }
 
 export default Modules;

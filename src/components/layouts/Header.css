@@ -1,0 +1,26 @@
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 24px;
+  background-color: var(--col-dark);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+header .header-brand {
+  text-decoration: none;
+}
+
+header .header-brand h1 {
+  color: white;
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+header .header-logo {
+  height: 40px;
+  width: auto;
+  object-fit: contain;
+  opacity: 0.9;
+}

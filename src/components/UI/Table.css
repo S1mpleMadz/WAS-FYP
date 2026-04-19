@@ -1,0 +1,71 @@
+.table-wrapper {
+  overflow: auto;
+  display: flex;
+  justify-content: center;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.table-title {
+  text-align: center;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--col-text);
+  margin-bottom: 1rem;
+  margin-top: 2rem;
+}
+
+.reusable-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 2rem;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  border: 1px solid var(--col-border);
+  box-shadow: var(--shadow-sm);
+}
+
+.reusable-table th {
+  background-color: var(--col-dark);
+  color: white;
+  padding: 12px 16px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+}
+
+.reusable-table th:first-child { border-top-left-radius: var(--radius-md); }
+.reusable-table th:last-child  { border-top-right-radius: var(--radius-md); }
+.reusable-table th.center { text-align: center; }
+.reusable-table th.right  { text-align: right; }
+
+.reusable-table td {
+  padding: 10px 16px;
+  border-bottom: 1px solid var(--col-border);
+  color: var(--col-text);
+  font-size: 0.9rem;
+}
+
+.reusable-table td.center { text-align: center; }
+.reusable-table td.right  { text-align: right; }
+
+.reusable-table tbody tr {
+  background-color: var(--col-surface);
+  transition: background-color 0.15s ease;
+}
+
+.reusable-table tbody tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.reusable-table tbody tr:hover {
+  background-color: #eff6ff;
+  cursor: pointer;
+}
+
+.reusable-table tbody tr.clicked,
+.reusable-table tbody tr.selected {
+  background-color: #dbeafe !important;
+}

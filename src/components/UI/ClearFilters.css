@@ -1,0 +1,32 @@
+.clear-filters {
+  margin-top: 1rem;
+}
+
+.clear-filters .clear-button {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background-color: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.45);
+}
+
+.clear-filters .clear-button:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.clear-filters .clear-button:not(:disabled) {
+  background-color: var(--col-accent);
+  border-color: var(--col-accent);
+  color: white;
+}
+
+.clear-filters .clear-button:not(:disabled):hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+}

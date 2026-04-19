@@ -1,0 +1,73 @@
+.dutyInfo {
+  display: flex;
+  align-items: flex-start;
+  gap: 2rem;
+  background: var(--col-surface);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 740px;
+  margin: 0 auto 1.5rem;
+  box-shadow: var(--shadow-sm);
+}
+
+.dutyEffortBadge {
+  width: 150px;
+  height: 150px;
+  background-color: var(--col-dark);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  gap: 6px;
+  padding: 1rem;
+}
+
+.dutyEffortBadge span {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  text-align: center;
+  line-height: 1.2;
+}
+
+.dutyEffortBadge small {
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+.dutyInfoDetails {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  flex-grow: 1;
+}
+
+.dutyInfoDetails p {
+  font-size: 0.93rem;
+  color: var(--col-text);
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  line-height: 1.4;
+}
+
+.dutyInfoDetails strong {
+  color: var(--col-text-muted);
+  font-weight: 600;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  min-width: 88px;
+  flex-shrink: 0;
+}
+
+.dutyAssignedInfo {
+  max-width: 900px;
+  margin: 0 auto;
+}
