@@ -96,3 +96,15 @@
 .loginButton:active {
   background-color: #1d4ed8;
 }
+
+.loginButton:disabled {
+  background-color: var(--col-text-muted);
+  cursor: not-allowed;
+}
+
+.loginError {
+  font-size: 0.85rem;
+  color: #ef4444;
+  text-align: center;
+  margin: 0;
+}

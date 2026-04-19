@@ -1,14 +1,41 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import bcrypt from "bcryptjs";
+import API from "../../api/API.js";
+import { useAuth } from "../../auth/AuthContext.js";
 import "./LoginForm.css";
 
 export default function LoginForm() {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+  const { login } = useAuth();
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
+    setError("");
+    setIsLoading(true);
+
+    const result = await API.get(`/usercredentials/email/${encodeURIComponent(email)}`);
+
+    if (!result.isSuccess || !result.result || result.result.length === 0) {
+      setError("Invalid email or password.");
+      setIsLoading(false);
+      return;
+    }
+
+    const record = result.result[0];
+    const passwordMatch = await bcrypt.compare(password, record.PasswordHash);
+
+    if (!passwordMatch) {
+      setError("Invalid email or password.");
+      setIsLoading(false);
+      return;
+    }
+
+    login({ userID: record.UserID, userEmail: record.UserEmail });
     navigate("/");
   };
 
@@ -20,13 +47,14 @@ export default function LoginForm() {
 
         <form className="loginFields" onSubmit={handleLogin}>
           <div className="loginField">
-            <label htmlFor="username">Username</label>
+            <label htmlFor="email">Email</label>
             <input
-              id="username"
-              type="text"
-              placeholder="Enter your username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              id="email"
+              type="email"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -38,11 +66,14 @@ export default function LoginForm() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
-          <button type="submit" className="loginButton">
-            Login
+          {error && <p className="loginError">{error}</p>}
+
+          <button type="submit" className="loginButton" disabled={isLoading}>
+            {isLoading ? "Signing in..." : "Login"}
           </button>
         </form>
       </div>
