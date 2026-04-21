@@ -35,7 +35,10 @@ export default function LoginForm() {
       return;
     }
 
-    login({ userID: record.UserID, userEmail: record.UserEmail });
+    const userResult = await API.get(`/users/${record.UserID}`);
+    const userTypeID = userResult.isSuccess ? userResult.result?.[0]?.UserTypeID ?? null : null;
+
+    login({ userID: record.UserID, userEmail: record.UserEmail, userTypeID });
     navigate("/");
   };
 
