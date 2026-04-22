@@ -11,11 +11,15 @@ import PageNotFound from "./components/pages/404.js";
 import SignIn from "./components/pages/SignIn.js";
 import Staff from "./components/pages/Staff.js";
 import Research from "./components/pages/Research.js";
+import Leaderboard from "./components/pages/Leaderboard.js";
 import SpecificUserInformation from "./components/entities/MoreUserInfo/UserInfoCard.js";
 import SpecificModuleInformation from "./components/entities/MoreModuleInfo/ModuleInfoCard.js";
 import SpecificDutyInformation from "./components/entities/MoreDutyInfo/DutyInfoCard.js";
 import SpecificResearchInformation from "./components/entities/MoreResearchInfo/ResearchInfoCard.js";
 import "./App.css";
+
+const ADMIN_ROLES = [1, 2];
+const STAFF_ROLES = [3];
 
 function App() {
   return (
@@ -28,11 +32,18 @@ function App() {
             <Route path="/duties" element={<ProtectedRoute><Duties /></ProtectedRoute>} />
             <Route path="/modules" element={<ProtectedRoute><Modules /></ProtectedRoute>} />
             <Route path="/signin" element={<ProtectedRoute><SignIn /></ProtectedRoute>} />
-            <Route path="/staff" element={<ProtectedRoute><Staff /></ProtectedRoute>} />
             <Route path="/research" element={<ProtectedRoute><Research /></ProtectedRoute>} />
             <Route
+              path="/staff"
+              element={<ProtectedRoute allowedRoles={ADMIN_ROLES}><Staff /></ProtectedRoute>}
+            />
+            <Route
+              path="/leaderboard"
+              element={<ProtectedRoute allowedRoles={[...ADMIN_ROLES, ...STAFF_ROLES]}><Leaderboard /></ProtectedRoute>}
+            />
+            <Route
               path="/UserInformation/:userId"
-              element={<ProtectedRoute><SpecificUserInformation /></ProtectedRoute>}
+              element={<ProtectedRoute allowedRoles={ADMIN_ROLES}><SpecificUserInformation /></ProtectedRoute>}
             />
             <Route
               path="/ModuleInformation/:moduleId"
