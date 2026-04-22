@@ -41,3 +41,15 @@ div.searchContainer h2 {
   width: 100%;
   min-width: 0;
 }
+
+.panelToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: var(--col-surface);
+  border: 1px solid var(--col-border);
+  border-radius: var(--radius-md);
+  padding: 10px 16px;
+  box-shadow: var(--shadow-sm);
+}

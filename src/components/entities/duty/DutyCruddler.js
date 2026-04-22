@@ -11,7 +11,6 @@ import "../../UI/Modal.css";
 import "./DutyCruddler.css";
 import API from "../../api/API.js";
 import "../../layouts/Sidebar.css";
-import ClearFilters from "../../UI/ClearFilters.js";
 import Pagination from "../../UI/Pagination.js";
 
 export default function DutyCruddler({ endpoint }) {
@@ -35,11 +34,6 @@ export default function DutyCruddler({ endpoint }) {
     }
   };
 
-  const handleClearFilters = () => {
-    setSearchQuery("");
-    setCurrentPage(1);
-  };
-
   const filteredDuties = duties.filter((duty) =>
     duty.DutyName?.toLowerCase().includes(searchQuery.toLowerCase()),
   );
@@ -59,57 +53,43 @@ export default function DutyCruddler({ endpoint }) {
       <Error show={showError} message={errorMessage} onDismiss={closeError} />
       <Alert show={showAlert} message={alertMessage} onDismiss={closeAlert} />
       <div className="panel">
-        <Actions.Tray>
-          {!showForm && (
-            <Actions.Add
-              showText
-              buttonText="Add New Duty"
-              onClick={() => openForm("Add New Duty")}
-            />
-          )}
-        </Actions.Tray>
+        <div className="panelToolbar">
+          <Actions.Add
+            showText
+            buttonText="Add New Duty"
+            onClick={() => openForm("Add New Duty")}
+          />
+          <Search
+            searchQuery={searchQuery}
+            onSearchChange={(val) => { setSearchQuery(val); setCurrentPage(1); }}
+            placeholder="Search duties..."
+            className="search-light"
+          />
+        </div>
 
-        <div className="sidebar">
-          <aside>
-            <div className="searchContainer">
-              <h2>Search</h2>
-              <Search
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                placeholder="Search by duty name..."
+        <div className="content">
+          {isDutiesLoading ? (
+            <p>{loadingMessage}</p>
+          ) : filteredDuties.length === 0 ? (
+            <p>
+              {searchQuery
+                ? "No duties match your search."
+                : "No records found..."}
+            </p>
+          ) : (
+            <>
+              <CardContainer>
+                {paginatedDuties.map((duty) => (
+                  <DutyCard duty={duty} key={duty.DutyID} />
+                ))}
+              </CardContainer>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
               />
-            </div>
-
-            <ClearFilters
-              onClear={handleClearFilters}
-              hasActiveFilters={searchQuery !== ""}
-            />
-          </aside>
-
-          <div className="content">
-            {isDutiesLoading ? (
-              <p>{loadingMessage}</p>
-            ) : filteredDuties.length === 0 ? (
-              <p>
-                {searchQuery
-                  ? "No duties match your search."
-                  : "No records found..."}
-              </p>
-            ) : (
-              <>
-                <CardContainer>
-                  {paginatedDuties.map((duty) => (
-                    <DutyCard duty={duty} key={duty.DutyID} />
-                  ))}
-                </CardContainer>
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>

@@ -11,7 +11,6 @@ import "../../UI/Modal.css";
 import "./ResearchCruddler.css";
 import API from "../../api/API.js";
 import "../../layouts/Sidebar.css";
-import ClearFilters from "../../UI/ClearFilters.js";
 import Pagination from "../../UI/Pagination.js";
 
 export default function ResearchCruddler({ endpoint }) {
@@ -35,11 +34,6 @@ export default function ResearchCruddler({ endpoint }) {
     }
   };
 
-  const handleClearFilters = () => {
-    setSearchQuery("");
-    setCurrentPage(1);
-  };
-
   const filteredItems = researchItems.filter(
     (r) =>
       r.ResearchName?.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -58,57 +52,43 @@ export default function ResearchCruddler({ endpoint }) {
       <Error show={showError} message={errorMessage} onDismiss={closeError} />
       <Alert show={showAlert} message={alertMessage} onDismiss={closeAlert} />
       <div className="panel">
-        <Actions.Tray>
-          {!showForm && (
-            <Actions.Add
-              showText
-              buttonText="Add Research Task"
-              onClick={() => openForm("Add Research Task")}
-            />
-          )}
-        </Actions.Tray>
+        <div className="panelToolbar">
+          <Actions.Add
+            showText
+            buttonText="Add Research Task"
+            onClick={() => openForm("Add Research Task")}
+          />
+          <Search
+            searchQuery={searchQuery}
+            onSearchChange={(val) => { setSearchQuery(val); setCurrentPage(1); }}
+            placeholder="Search by name or description..."
+            className="search-light"
+          />
+        </div>
 
-        <div className="sidebar">
-          <aside>
-            <div className="searchContainer">
-              <h2>Search</h2>
-              <Search
-                searchQuery={searchQuery}
-                onSearchChange={setSearchQuery}
-                placeholder="Search by name or description..."
+        <div className="content">
+          {isLoading ? (
+            <p>{loadingMessage}</p>
+          ) : filteredItems.length === 0 ? (
+            <p>
+              {searchQuery
+                ? "No research tasks match your search."
+                : "No records found..."}
+            </p>
+          ) : (
+            <>
+              <CardContainer>
+                {paginatedItems.map((r) => (
+                  <ResearchCard research={r} key={r.ResearchID} />
+                ))}
+              </CardContainer>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
               />
-            </div>
-
-            <ClearFilters
-              onClear={handleClearFilters}
-              hasActiveFilters={searchQuery !== ""}
-            />
-          </aside>
-
-          <div className="content">
-            {isLoading ? (
-              <p>{loadingMessage}</p>
-            ) : filteredItems.length === 0 ? (
-              <p>
-                {searchQuery
-                  ? "No research tasks match your search."
-                  : "No records found..."}
-              </p>
-            ) : (
-              <>
-                <CardContainer>
-                  {paginatedItems.map((r) => (
-                    <ResearchCard research={r} key={r.ResearchID} />
-                  ))}
-                </CardContainer>
-                <Pagination
-                  currentPage={currentPage}
-                  totalPages={totalPages}
-                  onPageChange={setCurrentPage}
-                />
-              </>
-            )}
-          </div>
+            </>
+          )}
         </div>
       </div>
     </>
