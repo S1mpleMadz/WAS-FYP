@@ -1,5 +1,6 @@
 .dutyCard {
   cursor: pointer;
+  height: 100%;
 }
 
 .duty-details {
