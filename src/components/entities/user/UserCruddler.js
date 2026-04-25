@@ -22,8 +22,9 @@ export default function UserCruddler({ endpoint }) {
   const [showAlert, alertMessage, openAlert, closeAlert] = useModal(false);
   const [showError, errorMessage, openError, closeError] = useModal(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [selectedPositions, setSelectedPositions] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedDepartments, setSelectedDepartments] = useState([]);
+  const [selectedWorkTypes, setSelectedWorkTypes] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const usersPerPage = 12;
 
@@ -53,8 +54,9 @@ export default function UserCruddler({ endpoint }) {
 
   const handleClearFilters = () => {
     setSearchQuery("");
-    setSelectedPositions([]);
     setSelectedTypes([]);
+    setSelectedDepartments([]);
+    setSelectedWorkTypes([]);
     setCurrentPage(1);
   };
 
@@ -64,14 +66,17 @@ export default function UserCruddler({ endpoint }) {
       user.UserLastname.toLowerCase().includes(searchQuery.toLowerCase()) ||
       user.UserEmail.toLowerCase().includes(searchQuery.toLowerCase());
 
-    const matchesPosition =
-      selectedPositions.length === 0 ||
-      selectedPositions.includes(user.UserPositionName);
     const matchesType =
       selectedTypes.length === 0 ||
       selectedTypes.includes(user.UserUsertypeName);
+    const matchesDepartment =
+      selectedDepartments.length === 0 ||
+      selectedDepartments.includes(user.DepartmentName);
+    const matchesWorkType =
+      selectedWorkTypes.length === 0 ||
+      selectedWorkTypes.includes(user.WorkTypeName);
 
-    return matchesSearch && matchesPosition && matchesType;
+    return matchesSearch && matchesType && matchesDepartment && matchesWorkType;
   });
 
   const totalPages = Math.ceil(filteredUsers.length / usersPerPage);
@@ -81,11 +86,14 @@ export default function UserCruddler({ endpoint }) {
     startIndex + usersPerPage,
   );
 
-  const uniquePositions = [
-    ...new Set(users.map((u) => u.UserPositionName).filter(Boolean)),
-  ].sort();
   const uniqueTypes = [
     ...new Set(users.map((u) => u.UserUsertypeName).filter(Boolean)),
+  ].sort();
+  const uniqueDepartments = [
+    ...new Set(users.map((u) => u.DepartmentName).filter(Boolean)),
+  ].sort();
+  const uniqueWorkTypes = [
+    ...new Set(users.map((u) => u.WorkTypeName).filter(Boolean)),
   ].sort();
 
   const addNewUserText = "Add new User";
@@ -119,17 +127,24 @@ export default function UserCruddler({ endpoint }) {
 
               <h2>Filter</h2>
               <Filter
-                title="Position"
-                options={uniquePositions}
-                selectedOptions={selectedPositions}
-                onOptionChange={setSelectedPositions}
-              />
-
-              <Filter
                 title="Type"
                 options={uniqueTypes}
                 selectedOptions={selectedTypes}
                 onOptionChange={setSelectedTypes}
+              />
+
+              <Filter
+                title="Department"
+                options={uniqueDepartments}
+                selectedOptions={selectedDepartments}
+                onOptionChange={setSelectedDepartments}
+              />
+
+              <Filter
+                title="Work Type"
+                options={uniqueWorkTypes}
+                selectedOptions={selectedWorkTypes}
+                onOptionChange={setSelectedWorkTypes}
               />
             </div>
 
@@ -137,8 +152,9 @@ export default function UserCruddler({ endpoint }) {
               onClear={handleClearFilters}
               hasActiveFilters={
                 searchQuery !== "" ||
-                selectedPositions.length > 0 ||
-                selectedTypes.length > 0
+                selectedTypes.length > 0 ||
+                selectedDepartments.length > 0 ||
+                selectedWorkTypes.length > 0
               }
             />
           </aside>

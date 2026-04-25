@@ -13,7 +13,7 @@ div.ModalOverlay div.ModalPane {
   background-color: var(--col-surface);
   border-radius: var(--radius-lg);
   width: 90%;
-  max-width: 600px;
+  max-width: 560px;
   box-shadow: var(--shadow-lg);
   overflow: hidden;
   animation: slideUp 0.25s ease-out;
@@ -24,14 +24,17 @@ div.ModalOverlay div.ModalPane header {
   color: white;
   font-size: 1rem;
   font-weight: 600;
-  padding: 16px 24px;
+  padding: 18px 28px;
+  display: flex;
+  align-items: center;
   justify-content: center;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.04em;
+  border-bottom: 3px solid var(--col-accent);
 }
 
 div.ModalOverlay div.ModalPane main {
-  padding: 24px;
-  background-color: var(--col-bg);
+  padding: 28px 28px 20px;
+  background-color: var(--col-surface);
 }
 
 @keyframes fadeIn {

@@ -1,48 +1,46 @@
 div.Form {
-  border: 1px solid var(--col-border);
-  border-radius: var(--radius-md);
-  padding: 24px;
-  margin-bottom: 20px;
-  background-color: var(--col-surface);
-  max-height: 60vh;
+  max-height: 65vh;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 0;
 }
 
 div.Form div.FormTray {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 24px;
 }
 
 div.Form div.FormTray div.FormItem {
   display: flex;
   flex-direction: column;
   gap: 6px;
-  margin-bottom: 16px;
 }
 
-div.Form div.FormTray div.FormItem div.FormLabel {
-  font-weight: 600;
-  font-size: 0.78rem;
-  color: var(--col-text-muted);
+label.FormLabel {
+  font-weight: 700;
+  font-size: 0.72rem;
+  color: var(--col-accent);
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.08em;
 }
 
 div.Form div.FormTray div.FormItem label,
 div.Form div.FormTray div.FormItem input,
 div.Form div.FormTray div.FormItem select {
   width: 100%;
-  font-size: 0.95rem;
+  font-size: 0.93rem;
 }
 
 div.Form div.FormTray div.FormItem select,
 div.Form div.FormTray div.FormItem input {
-  padding: 10px 12px;
+  padding: 10px 14px;
   border-radius: var(--radius-sm);
-  border: 1px solid var(--col-border);
-  background: var(--col-surface);
+  border: 1.5px solid var(--col-border);
+  background: var(--col-bg);
   color: var(--col-text);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
@@ -56,7 +54,7 @@ div.Form div.FormTray div.FormItem select:focus,
 div.Form div.FormTray div.FormItem input:focus {
   border-color: var(--col-accent);
   outline: none;
-  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
 }
 
 div.Form div.FormTray div.FormItem p.FormAdvice {
@@ -66,6 +64,40 @@ div.Form div.FormTray div.FormItem p.FormAdvice {
 
 div.Form div.FormTray div.FormItem p.FormError {
   color: var(--col-error);
-  font-weight: 500;
-  font-size: 0.8rem;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+/* Action row */
+div.Form div.ActionTray {
+  border-top: 1px solid var(--col-border);
+  padding-top: 18px;
+  justify-content: center;
+  gap: 8px;
+}
+
+/* Submit button — filled accent */
+div.Form div.ActionTray button.Action:first-child {
+  background-color: var(--col-accent);
+  border-color: var(--col-accent);
+  padding: 0 20px;
+}
+
+div.Form div.ActionTray button.Action:first-child p {
+  color: white;
+}
+
+div.Form div.ActionTray button.Action:first-child img,
+div.Form div.ActionTray button.Action:first-child:hover img {
+  filter: invert(1) brightness(10);
+}
+
+div.Form div.ActionTray button.Action:first-child:hover {
+  background-color: #2563eb;
+  border-color: #2563eb;
+  transform: translateY(-1px);
+}
+
+div.Form div.ActionTray button.Action:first-child:hover p {
+  color: white;
 }

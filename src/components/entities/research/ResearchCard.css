@@ -1,5 +1,6 @@
 .researchCard {
   cursor: pointer;
+  height: 100%;
 }
 
 .research-details {

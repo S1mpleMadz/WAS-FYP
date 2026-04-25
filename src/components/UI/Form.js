@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Action from "./Actions";
+import "./Form.css";
 
 export function Form({ children, onSubmit, onCancel, submitButtonText }) {
   // View ---------------------------------------------------------

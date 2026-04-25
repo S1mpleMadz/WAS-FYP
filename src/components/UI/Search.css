@@ -23,3 +23,24 @@
 .search-input input::placeholder {
   color: rgba(255, 255, 255, 0.38);
 }
+
+.search-input.search-light {
+  margin-bottom: 0;
+  min-width: 260px;
+  max-width: 340px;
+}
+
+.search-input.search-light input {
+  background-color: var(--col-bg);
+  border: 1px solid var(--col-border);
+  color: var(--col-text);
+}
+
+.search-input.search-light input:focus {
+  border-color: var(--col-accent);
+  background-color: var(--col-surface);
+}
+
+.search-input.search-light input::placeholder {
+  color: var(--col-text-muted);
+}
