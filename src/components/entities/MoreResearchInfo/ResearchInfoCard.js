@@ -1,4 +1,5 @@
 import { useParams, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import Actions from "../../UI/Actions.js";
 import { useModal, Modal } from "../../UI/Modal.js";
 import { Alert, Error } from "../../UI/Notifications.js";
@@ -24,6 +25,19 @@ export default function SpecificResearchInformation() {
   const [research, isLoading, loadingMessage, loadRecord] = useLoad(
     `/research/${researchId}`,
   );
+  const [assignedUserName, setAssignedUserName] = useState(null);
+
+  useEffect(() => {
+    if (research && research.length > 0 && research[0].ResearchUserID) {
+      API.get(`/Users/${research[0].ResearchUserID}`).then(result => {
+        if (result.isSuccess && result.result && result.result.length > 0) {
+          const u = result.result[0];
+          setAssignedUserName(`${u.UserFirstname} ${u.UserLastname}`);
+        }
+      });
+    }
+  }, [research]);
+
   const [showForm, formTitle, openForm, closeForm] = useModal(false);
   const [showDeleteModal, , openDeleteModal, closeDeleteModal] = useModal(false);
   const [showAlert, alertMessage, openAlert, closeAlert] = useModal(false);
@@ -88,6 +102,7 @@ export default function SpecificResearchInformation() {
         show={showDeleteModal}
         itemType="research task"
         itemName={data.ResearchName}
+        assignedTo={assignedUserName ? [assignedUserName] : []}
         onConfirm={handleDelete}
         onCancel={closeDeleteModal}
       />

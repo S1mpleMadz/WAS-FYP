@@ -64,10 +64,17 @@ export default function SpecificUserInformation() {
 
   const userData = user[0];
 
+  const userAssignedTo = [
+    ...(teaching || []).map(t => `Module: ${t.ModuleCode} – ${t.ModuleName}`),
+    ...(teachingDuty || []).map(d => `Duty: ${d.DutyName}`),
+    ...(research || []).map(r => `Research: ${r.ResearchName}`),
+  ];
+
   return (
     <>
       <UserProfileCard
         userData={userData}
+        assignedTo={userAssignedTo}
         showForm={showForm}
         formTitle={formTitle}
         openForm={openForm}

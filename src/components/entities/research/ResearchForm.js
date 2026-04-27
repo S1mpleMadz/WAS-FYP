@@ -55,6 +55,11 @@ const validation = {
 
 export function ResearchForm({ initialResearch, onCancel, onSubmit }) {
   if (!initialResearch) initialResearch = defaultResearch;
+  initialResearch = {
+    ...initialResearch,
+    StartDate: initialResearch.StartDate ? String(initialResearch.StartDate).slice(0, 10) : null,
+    EndDate:   initialResearch.EndDate   ? String(initialResearch.EndDate).slice(0, 10)   : null,
+  };
 
   const confirmText =
     initialResearch === defaultResearch

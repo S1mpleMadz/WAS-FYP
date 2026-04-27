@@ -7,6 +7,7 @@ import ResetPasswordForm from "./ResetPasswordForm.js";
 
 export default function UserProfileCard({
   userData,
+  assignedTo,
   showForm,
   formTitle,
   openForm,
@@ -48,6 +49,7 @@ export default function UserProfileCard({
         show={showDeleteModal}
         itemType="user"
         itemName={`${userData.UserFirstname} ${userData.UserLastname}`}
+        assignedTo={assignedTo}
         onConfirm={onDelete}
         onCancel={closeDeleteModal}
       />

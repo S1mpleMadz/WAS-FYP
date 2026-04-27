@@ -109,6 +109,10 @@ export default function SpecificDutyInformation() {
 
   const dutyData = duty[0];
 
+  const dutyAssignedTo = (assignedStaff || []).map(
+    s => `${s.UserFirstname} ${s.UserLastname}`
+  );
+
   return (
     <>
       <Modal show={showForm} title={formTitle}>
@@ -134,6 +138,7 @@ export default function SpecificDutyInformation() {
         show={showDeleteModal}
         itemType="duty"
         itemName={dutyData.DutyName}
+        assignedTo={dutyAssignedTo}
         onConfirm={handleDelete}
         onCancel={closeDeleteModal}
       />

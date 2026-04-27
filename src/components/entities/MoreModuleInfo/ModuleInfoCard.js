@@ -178,6 +178,10 @@ export default function SpecificModuleInformation() {
 
   const moduleData = module[0];
 
+  const moduleAssignedTo = (teachingStaff || []).map(
+    s => `${s.UserFirstname} ${s.UserLastname}`
+  );
+
   return (
     <>
       <Modal show={showForm} title={formTitle}>
@@ -213,6 +217,7 @@ export default function SpecificModuleInformation() {
         show={showDeleteModal}
         itemType="module"
         itemName={`${moduleData.ModuleCode} – ${moduleData.ModuleName}`}
+        assignedTo={moduleAssignedTo}
         onConfirm={handleDelete}
         onCancel={closeDeleteModal}
       />
