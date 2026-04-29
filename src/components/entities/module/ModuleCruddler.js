@@ -26,7 +26,8 @@ export default function ModuleCruddler({ endpoint }) {
   const modulesPerPage = 12;
 
   const handleSubmit = async (module) => {
-    const result = await API.post(endpoint, module);
+    const payload = { ModuleImageURL: "", ModuleSize: 0, ModuleEffort: 0, ...module };
+    const result = await API.post(endpoint, payload);
     if (result.isSuccess) {
       closeForm();
       openAlert("Module successfully added");

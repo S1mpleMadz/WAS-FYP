@@ -71,13 +71,13 @@ export function ModuleForm({ initialModule, onCancel, onSubmit }) {
           )}
         </Form.Item>
 
-        <Form.Item label="Module Leader" error={errors.LeaderID}>
+        <Form.Item label="Module Leader" error={errors.ModuleLeaderID}>
           {!users ? (
             <p>{loadingUsersMessage}</p>
           ) : (
             <select
-              name="LeaderID"
-              value={conformance.js2html.LeaderID(module.LeaderID)}
+              name="ModuleLeaderID"
+              value={conformance.js2html.ModuleLeaderID(module.ModuleLeaderID)}
               onChange={handleChange}
             >
               <option value="0" disabled>None selected</option>
