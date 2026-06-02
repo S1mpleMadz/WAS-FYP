@@ -23,39 +23,99 @@ const STAFF_ROLES = [3];
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/was">
       <AuthProvider>
         <Layout>
           <Routes>
             <Route path="/login" element={<Login />} />
-            <Route exact path="/" element={<ProtectedRoute><Home /></ProtectedRoute>} />
-            <Route path="/duties" element={<ProtectedRoute><Duties /></ProtectedRoute>} />
-            <Route path="/modules" element={<ProtectedRoute><Modules /></ProtectedRoute>} />
-            <Route path="/signin" element={<ProtectedRoute><SignIn /></ProtectedRoute>} />
-            <Route path="/research" element={<ProtectedRoute><Research /></ProtectedRoute>} />
+            <Route
+              exact
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <Home />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/duties"
+              element={
+                <ProtectedRoute>
+                  <Duties />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/modules"
+              element={
+                <ProtectedRoute>
+                  <Modules />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/signin"
+              element={
+                <ProtectedRoute>
+                  <SignIn />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/research"
+              element={
+                <ProtectedRoute>
+                  <Research />
+                </ProtectedRoute>
+              }
+            />
             <Route
               path="/staff"
-              element={<ProtectedRoute allowedRoles={ADMIN_ROLES}><Staff /></ProtectedRoute>}
+              element={
+                <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+                  <Staff />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/leaderboard"
-              element={<ProtectedRoute allowedRoles={[...ADMIN_ROLES, ...STAFF_ROLES]}><Leaderboard /></ProtectedRoute>}
+              element={
+                <ProtectedRoute allowedRoles={[...ADMIN_ROLES, ...STAFF_ROLES]}>
+                  <Leaderboard />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/UserInformation/:userId"
-              element={<ProtectedRoute allowedRoles={ADMIN_ROLES}><SpecificUserInformation /></ProtectedRoute>}
+              element={
+                <ProtectedRoute allowedRoles={ADMIN_ROLES}>
+                  <SpecificUserInformation />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/ModuleInformation/:moduleId"
-              element={<ProtectedRoute><SpecificModuleInformation /></ProtectedRoute>}
+              element={
+                <ProtectedRoute>
+                  <SpecificModuleInformation />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/DutyInformation/:dutyId"
-              element={<ProtectedRoute><SpecificDutyInformation /></ProtectedRoute>}
+              element={
+                <ProtectedRoute>
+                  <SpecificDutyInformation />
+                </ProtectedRoute>
+              }
             />
             <Route
               path="/ResearchInformation/:researchId"
-              element={<ProtectedRoute><SpecificResearchInformation /></ProtectedRoute>}
+              element={
+                <ProtectedRoute>
+                  <SpecificResearchInformation />
+                </ProtectedRoute>
+              }
             />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
