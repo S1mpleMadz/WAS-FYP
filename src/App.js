@@ -23,7 +23,7 @@ const STAFF_ROLES = [3];
 
 function App() {
   return (
-    <BrowserRouter basename="/was">
+    <BrowserRouter>
       <AuthProvider>
         <Layout>
           <Routes>
